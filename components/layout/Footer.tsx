@@ -34,7 +34,10 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-slate-950 text-slate-300 overflow-hidden border-t border-slate-800">
+    <footer
+      className="relative bg-[#181818] text-neutral-300 overflow-hidden border-t border-[#262626]"
+      style={{ backgroundColor: '#181818' }}
+    >
       {/* Subtle ambient glows */}
       <div
         className="absolute top-0 left-1/4 w-96 h-96 bg-red-600/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"
@@ -49,7 +52,7 @@ export function Footer() {
         {/* =========================================================================
             DYNAMIC LOCATION & CENTRAL MAP SHOWCASE BANNER
         ========================================================================= */}
-        <div className="bg-slate-900 rounded-3xl border border-slate-800 p-6 sm:p-8 mb-12 shadow-2xl">
+        <div className="bg-[#202020] rounded-3xl border border-[#2e2e2e] p-6 sm:p-8 mb-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Address Details */}
             <div className="lg:col-span-7 space-y-3.5">
@@ -66,16 +69,16 @@ export function Footer() {
                 {activeLocation.name}
               </h3>
 
-              <div className="space-y-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                <p className="flex items-start gap-2 text-slate-200 font-medium">
+              <div className="space-y-2 text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                <p className="flex items-start gap-2 text-neutral-200 font-medium">
                   <span className="font-bold text-red-400 shrink-0">Address:</span>
                   <span>{activeLocation.displayAddress}</span>
                 </p>
-                <p className="flex items-center gap-2 text-xs text-slate-400">
-                  <span className="font-bold text-slate-300 shrink-0">Landmark:</span>
+                <p className="flex items-center gap-2 text-xs text-neutral-400">
+                  <span className="font-bold text-neutral-300 shrink-0">Landmark:</span>
                   <span>{activeLocation.landmark}</span>
-                  <span className="text-slate-700">|</span>
-                  <span className="font-bold text-slate-300 shrink-0">PIN Code:</span>
+                  <span className="text-neutral-700">|</span>
+                  <span className="font-bold text-neutral-300 shrink-0">PIN Code:</span>
                   <span>{activeLocation.pincode}</span>
                 </p>
                 <p className="text-xs text-sky-400 font-semibold flex items-center gap-2">
@@ -84,8 +87,8 @@ export function Footer() {
                 </p>
 
                 {activeLocation.isDistrictActive && (
-                  <div className="mt-3 pt-3 border-t border-slate-800 text-[11px] text-slate-400">
-                    <span className="font-bold text-slate-200">State &amp; National Central Headquarters: </span>
+                  <div className="mt-3 pt-3 border-t border-[#2e2e2e] text-[11px] text-neutral-400">
+                    <span className="font-bold text-neutral-200">State &amp; National Central Headquarters: </span>
                     {HEADQUARTERS_INFO.address}
                   </div>
                 )}
@@ -112,16 +115,16 @@ export function Footer() {
                 </a>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2a2a2a] hover:bg-[#333333] border border-[#383838] text-neutral-200 text-xs font-bold transition-colors"
                 >
                   <span>All Contact Details</span>
-                  <ExternalLink className="w-3 h-3 text-slate-400" />
+                  <ExternalLink className="w-3 h-3 text-neutral-400" />
                 </Link>
               </div>
             </div>
 
             {/* Embedded Live Interactive Google Map */}
-            <div className="lg:col-span-5 h-[230px] sm:h-[260px] rounded-2xl overflow-hidden border border-slate-700 shadow-md relative bg-slate-800">
+            <div className="lg:col-span-5 h-[230px] sm:h-[260px] rounded-2xl overflow-hidden border border-[#333333] shadow-md relative bg-[#222222]">
               <iframe
                 title={`${activeLocation.name} Google Map Location`}
                 src={activeLocation.googleMapsEmbedUrl}
@@ -133,7 +136,7 @@ export function Footer() {
                 referrerPolicy="no-referrer-when-downgrade"
                 className="w-full h-full"
               />
-              <div className="absolute bottom-2 left-2 right-2 bg-slate-900/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-700 text-[10px] text-slate-300 flex items-center justify-between">
+              <div className="absolute bottom-2 left-2 right-2 bg-[#181818]/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-[#333333] text-[10px] text-neutral-300 flex items-center justify-between">
                 <span className="font-bold truncate text-white">{activeLocation.name} Service Center</span>
                 <span className="text-emerald-400 font-semibold shrink-0">● Active Dispatch</span>
               </div>
@@ -144,7 +147,7 @@ export function Footer() {
         {/* =========================================================================
             FOUR COLUMN NAVIGATION GRID
         ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-slate-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-[#282828]">
           {/* Col 1: Brand Info & ISO Badges */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-3 group cursor-pointer inline-flex" title="Human Biomedical - Go to Homepage">
@@ -157,17 +160,17 @@ export function Footer() {
                 <span className="font-extrabold text-lg text-white block leading-tight group-hover:text-red-400 transition-colors">
                   Human Biomedical
                 </span>
-                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+                <span className="text-[10px] font-semibold text-neutral-400 uppercase tracking-wider">
                   Clinical Diagnostics &amp; Equipment
                 </span>
               </div>
             </Link>
 
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className="text-xs text-neutral-400 leading-relaxed">
               Authorized provider of advanced clinical laboratory equipment, automated hematology counters, clinical chemistry analyzers, and diagnostic reagents across Rajasthan and India.
             </p>
 
-            <div className="space-y-1.5 text-xs text-slate-300">
+            <div className="space-y-1.5 text-xs text-neutral-300">
               <div className="flex items-center gap-2">
                 <Award className="w-4 h-4 text-sky-400 shrink-0" />
                 <span>ISO 13485:2016 Certified Quality</span>
@@ -188,7 +191,7 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
               Diagnostic Instruments
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2.5 text-xs text-neutral-400">
               <li>
                 <Link href="/category/hematology" className="hover:text-white transition-colors">
                   3-Part &amp; 5-Part Hematology Analyzers
@@ -232,7 +235,7 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
               Regional Service Centers
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2.5 text-xs text-neutral-400">
               <li>
                 <Link href="/rajasthan/nagaur" className="hover:text-white transition-colors flex items-center justify-between">
                   <span>Nagaur JLN Hospital Hub</span>
@@ -283,7 +286,7 @@ export function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white mb-4">
               Company &amp; Support
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-400">
+            <ul className="space-y-2.5 text-xs text-neutral-400">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About Human Biomedical LLP
@@ -329,14 +332,14 @@ export function Footer() {
         </div>
 
         {/* Quick 50 Rajasthan Districts & India Metros Link Cloud */}
-        <div className="pt-8 pb-6 border-b border-slate-800">
-          <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center justify-between">
+        <div className="pt-8 pb-6 border-b border-[#282828]">
+          <div className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 mb-2.5 flex items-center justify-between">
             <span>Fast Supply &amp; Calibration Service Across All 50 Districts of Rajasthan &amp; India:</span>
             <Link href="/rajasthan" className="text-red-400 hover:underline text-[10px]">
               Full District Directory
             </Link>
           </div>
-          <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-slate-400">
+          <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px] text-neutral-400">
             {RAJASTHAN_DISTRICTS.map((dist) => (
               <Link
                 key={dist.slug}
@@ -350,7 +353,7 @@ export function Footer() {
               <Link
                 key={dist.slug}
                 href={`/rajasthan/${dist.slug}`}
-                className="hover:text-sky-400 hover:underline transition-colors font-medium text-slate-300"
+                className="hover:text-sky-400 hover:underline transition-colors font-medium text-neutral-300"
               >
                 {dist.name}
               </Link>
@@ -361,35 +364,35 @@ export function Footer() {
         {/* Bottom Social & Security Trust Bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Contact Direct Strip */}
-          <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300">
+          <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-300">
             <span className="flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5 text-red-500" />
               <a href="tel:+919829088234" className="font-semibold hover:text-white">
                 +91 98290 88234
               </a>
             </span>
-            <span className="text-slate-700">|</span>
+            <span className="text-neutral-700">|</span>
             <span className="flex items-center gap-1.5">
               <Mail className="w-3.5 h-3.5 text-sky-400" />
               <a href="mailto:sales@humanbiomedical.in" className="font-semibold hover:text-white">
                 sales@humanbiomedical.in
               </a>
             </span>
-            <span className="text-slate-700">|</span>
-            <span className="text-slate-400">
+            <span className="text-neutral-700">|</span>
+            <span className="text-neutral-400">
               {HEADQUARTERS_INFO.address}
             </span>
           </div>
 
           {/* Secure Payment & CDSCO Badges */}
-          <div className="flex items-center gap-2 text-[11px] text-slate-300 bg-slate-900 px-4 py-2 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-2 text-[11px] text-neutral-300 bg-[#222222] px-4 py-2 rounded-xl border border-[#2e2e2e]">
             <Lock className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span>ISO 13485:2016 Certified • CDSCO Registered • 100% On-Site Warranty Support</span>
           </div>
         </div>
 
         {/* Bottom Copyright */}
-        <div className="mt-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-slate-500">
+        <div className="mt-8 pt-6 border-t border-[#282828] flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-neutral-500">
           <p>© {new Date().getFullYear()} Human Biomedical LLP. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-white transition-colors">
