@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if the authenticated user is accessing their own document
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Helper function to check for admin claims or admin role
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'admin' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+      );
+    }
+
+    // Products: Publicly readable; Admin writable
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Categories: Publicly readable; Admin writable
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Offers & Campaigns: Publicly readable; Admin writable
+    match /offers/{offerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Coupons: Publicly readable for active validation; Admin writable
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Recipes: Publicly readable; Admin writable
+    match /recipes/{recipeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Store Settings & Homepage Config: Publicly readable; Admin writable
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /homepage/{configId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Users: Owner can read and update their own document; Admin full access
+    match /users/{userId} {
+      allow read, write: if isOwner(userId) || isAdmin();
+    }
+
+    // Orders: Owner can create and read their own orders; Admin full access
+    match /orders/{orderId} {
+      allow read: if (isAuthenticated() && resource.data.userId == request.auth.uid) || isAdmin();
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // Reviews: Publicly readable if approved; Authenticated users can submit; Admin full access
+    match /reviews/{reviewId} {
+      allow read: if resource.data.isApproved == true || isAdmin();
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin() || (isAuthenticated() && resource.data.userId == request.auth.uid);
+    }
+  }
+}

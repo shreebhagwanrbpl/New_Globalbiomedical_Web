@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-page: #FBF8F3;
+    --text-primary: #3B2A24;
+    --text-muted: #75665E;
+    --border-color: #E7D9C8;
+    --accent-terracotta: #B93826;
+    --accent-turmeric: #D97706;
+    --accent-cardamom: #2D6A4F;
+    --bg-sand: #F3EBDD;
+    --bg-peach: #F8E6DA;
+  }
+
+  /* Permanent No Pure Black Rule */
+  body {
+    background-color: #FBF8F3;
+    color: #3B2A24;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #F8E6DA;
+    color: #B93826;
+  }
+}
+
+/* Custom Warm Spice Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FBF8F3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E7D9C8;
+  border-radius: 9999px;
+  border: 2px solid #FBF8F3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B93826;
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
