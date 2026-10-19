@@ -4,50 +4,72 @@
 
 @layer base {
   :root {
-    --bg-page: #FBF8F3;
-    --text-primary: #3B2A24;
-    --text-muted: #75665E;
-    --border-color: #E7D9C8;
-    --accent-terracotta: #B93826;
-    --accent-turmeric: #D97706;
-    --accent-cardamom: #2D6A4F;
-    --bg-sand: #F3EBDD;
-    --bg-peach: #F8E6DA;
+    --bg-page: #FFFFFF;
+    --bg-surface: #F8FAFC;
+    --text-primary: #0F172A;
+    --text-muted: #475569;
+    --text-subtle: #94A3B8;
+    --border-color: #E2E8F0;
+    --accent-crimson: #DC2626;
+    --accent-sapphire: #0284C7;
+    --accent-navy: #0F172A;
+    --bg-sand: #F1F5F9;
+    --bg-peach: #FEF2F2;
   }
 
-  /* Permanent No Pure Black Rule */
   body {
-    background-color: #FBF8F3;
-    color: #3B2A24;
+    background-color: #FFFFFF;
+    color: #0F172A;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
   }
 
   ::selection {
-    background-color: #F8E6DA;
-    color: #B93826;
+    background-color: #FEE2E2;
+    color: #DC2626;
   }
 }
 
-/* Custom Warm Spice Scrollbar */
+/* Crisp Clean Medical Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #FBF8F3;
+  background: #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #E7D9C8;
+  background: #CBD5E1;
   border-radius: 9999px;
-  border: 2px solid #FBF8F3;
+  border: 2px solid #F8FAFC;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B93826;
+  background: #94A3B8;
+}
+
+/* Infinite Marquee Animation for Carousel */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 45s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
 }
 
 /* Reduced Motion Override */

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { Container, Button } from '@/components/common';
 import { useStore } from '@/context/StoreContext';
 import { formatCurrency } from '@/utils/currency';
@@ -11,13 +10,15 @@ import {
   Package,
   Heart,
   MapPin,
-  Settings,
   ChevronRight,
   ShieldCheck,
-  Award,
   Sparkles,
-  Truck,
+  PhoneCall,
+  Clock,
   CheckCircle2,
+  Activity,
+  Award,
+  Wrench,
 } from 'lucide-react';
 
 export default function AccountPage() {
@@ -26,29 +27,29 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = JSON.parse(localStorage.getItem('aaxol_demo_orders') || '[]');
+      const saved = JSON.parse(localStorage.getItem('human_bio_demo_orders') || localStorage.getItem('aaxol_demo_orders') || '[]');
       if (saved.length > 0) {
         setDemoOrders(saved);
       } else {
         // Sample default order for demo
         setDemoOrders([
           {
-            orderId: 'SPC-2026-1048',
+            orderId: 'HBM-2026-1048',
             createdAt: '2026-09-21T10:30:00.000Z',
             status: 'shipped',
-            pricing: { total: 1149 },
+            pricing: { total: 185000 },
             items: [
               {
-                title: 'Royal Rajasthani Laal Maas Masala',
-                selectedPackSize: '150g',
-                quantity: 2,
-                image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&auto=format&fit=crop&q=80',
+                title: 'HB-3000 Plus 3-Part Auto Hematology Analyzer',
+                selectedPackSize: 'Standard Analyzer Unit',
+                quantity: 1,
+                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&auto=format&fit=crop&q=80',
               },
               {
-                title: 'Salem Lakadong Turmeric Powder',
-                selectedPackSize: '200g',
-                quantity: 1,
-                image: 'https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400&auto=format&fit=crop&q=80',
+                title: 'Universal Hematology CBC Reagent Pack (20L Diluent + Lyse)',
+                selectedPackSize: 'Complete Trio Pack',
+                quantity: 2,
+                image: 'https://images.unsplash.com/photo-1579165466791-788226ab77b6?w=400&auto=format&fit=crop&q=80',
               },
             ],
           },
@@ -65,17 +66,17 @@ export default function AccountPage() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl bg-spice-espresso text-spice-sand font-serif font-bold text-2xl flex items-center justify-center shadow-warm-xs">
-                AB
+                DS
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="font-serif font-bold text-2xl text-spice-espresso">Aditya Birla</h1>
+                  <h1 className="font-serif font-bold text-2xl text-spice-espresso">Dr. Aditya Sharma</h1>
                   <span className="px-2.5 py-0.5 rounded-full bg-spice-cardamom-50 text-spice-cardamom text-[10px] font-bold border border-spice-cardamom-200">
-                    VIP Spice Club
+                    Verified Pathology Partner
                   </span>
                 </div>
                 <p className="text-xs text-spice-taupe mt-0.5">
-                  aditya.birla@example.com • +91 98765 43210
+                  Director, Rajasthan Diagnostic Center • aditya.sharma@rajasthandiag.com • +91 98290 88234
                 </p>
               </div>
             </div>
@@ -83,7 +84,7 @@ export default function AccountPage() {
             <div className="flex items-center gap-2">
               <Link href="/account/orders">
                 <Button variant="outline" size="sm">
-                  View Order History
+                  View Diagnostic Orders
                 </Button>
               </Link>
             </div>
@@ -103,7 +104,7 @@ export default function AccountPage() {
                 className="flex items-center justify-between p-3 rounded-2xl bg-spice-sand/40 text-spice-espresso font-bold text-xs"
               >
                 <span className="flex items-center gap-2.5">
-                  <User className="w-4 h-4 text-spice-terracotta" /> Profile &amp; Preferences
+                  <User className="w-4 h-4 text-spice-terracotta" /> Lab Profile &amp; Preferences
                 </span>
                 <ChevronRight className="w-4 h-4 text-spice-taupe" />
               </Link>
@@ -113,7 +114,7 @@ export default function AccountPage() {
                 className="flex items-center justify-between p-3 rounded-2xl hover:bg-spice-sand/30 text-spice-taupe hover:text-spice-espresso font-semibold text-xs transition-colors"
               >
                 <span className="flex items-center gap-2.5">
-                  <Package className="w-4 h-4 text-spice-cardamom" /> Orders &amp; Tracking ({demoOrders.length})
+                  <Package className="w-4 h-4 text-spice-cardamom" /> Orders &amp; Dispatches ({demoOrders.length})
                 </span>
                 <ChevronRight className="w-4 h-4 text-spice-taupe" />
               </Link>
@@ -123,40 +124,40 @@ export default function AccountPage() {
                 className="flex items-center justify-between p-3 rounded-2xl hover:bg-spice-sand/30 text-spice-taupe hover:text-spice-espresso font-semibold text-xs transition-colors"
               >
                 <span className="flex items-center gap-2.5">
-                  <Heart className="w-4 h-4 text-spice-terracotta" /> Saved Wishlist ({wishlist.length})
+                  <Heart className="w-4 h-4 text-spice-terracotta" /> Shortlisted Equipment ({wishlist.length})
                 </span>
                 <ChevronRight className="w-4 h-4 text-spice-taupe" />
               </Link>
             </div>
 
-            {/* Saved Delivery Addresses */}
+            {/* Registered Lab Facility Address */}
             <div className="bg-white rounded-3xl border border-spice-border p-6 shadow-warm-xs space-y-3">
               <div className="flex items-center justify-between">
                 <h3 className="font-serif font-bold text-sm text-spice-espresso flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-spice-cardamom" /> Saved Address
+                  <MapPin className="w-4 h-4 text-spice-cardamom" /> Clinical Facility Address
                 </h3>
                 <span className="text-[10px] font-bold text-spice-cardamom bg-spice-cardamom-50 px-2 py-0.5 rounded">
-                  DEFAULT
+                  REGISTERED LAB
                 </span>
               </div>
               <div className="text-xs text-spice-taupe leading-relaxed">
-                <strong className="text-spice-espresso block">Aditya Birla (Home)</strong>
-                402, Royal Palms Residency, MG Road<br />
-                Opposite State Bank, Jaipur, Rajasthan 302001<br />
-                Phone: +91 98765 43210
+                <strong className="text-spice-espresso block">Rajasthan Diagnostic &amp; Research Center</strong>
+                Near JLN Hospital Circle, Bikaner Highway<br />
+                Nagaur, Rajasthan 341001<br />
+                GSTIN: 08AABCR1234F1Z8 • Phone: +91 98290 88234
               </div>
             </div>
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: ACTIVE ORDERS & TASTE PROFILE PREFERENCES
+              RIGHT COLUMN: ACTIVE ORDERS & CLINICAL PREFERENCES
           ========================================================================= */}
           <div className="lg:col-span-8 space-y-6">
             {/* Recent Orders Overview */}
             <div className="bg-white rounded-3xl border border-spice-border p-6 shadow-warm-xs space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-spice-border">
                 <h2 className="font-serif font-bold text-lg text-spice-espresso">
-                  Recent Orders
+                  Recent Equipment &amp; Reagent Dispatches
                 </h2>
                 <Link href="/account/orders" className="text-xs font-bold text-spice-terracotta hover:underline">
                   View Full Tracking Details →
@@ -178,44 +179,44 @@ export default function AccountPage() {
                       </span>
                     </div>
                     <p className="text-xs text-spice-taupe">
-                      {ord.items?.length || 1} Spices • Total: <strong>{formatCurrency(ord.pricing?.total || 799)}</strong>
+                      {ord.items?.length || 1} Products • Total: <strong>{formatCurrency(ord.pricing?.total || 185000)}</strong>
                     </p>
                   </div>
 
                   <Link href="/account/orders">
                     <Button variant="outline" size="sm" className="text-xs">
-                      Track Parcel
+                      Track Dispatch
                     </Button>
                   </Link>
                 </div>
               ))}
             </div>
 
-            {/* Spice Taste Profile Preferences */}
+            {/* Clinical Laboratory Configuration */}
             <div className="bg-white rounded-3xl border border-spice-border p-6 shadow-warm-xs space-y-4">
               <h3 className="font-serif font-bold text-lg text-spice-espresso flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-spice-terracotta" /> My Culinary &amp; Spice Preferences
+                <Activity className="w-5 h-5 text-spice-terracotta" /> Diagnostic Facility Specifications
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="p-4 rounded-2xl bg-spice-sand/20 border border-spice-border">
-                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Preferred Heat Level</span>
-                  <span className="font-bold text-spice-espresso text-sm">Medium Heat (Mathania &amp; Kashmiri)</span>
+                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Primary Diagnostics</span>
+                  <span className="font-bold text-spice-espresso text-sm">3-Part CBC &amp; Clinical Biochemistry</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-spice-sand/20 border border-spice-border">
-                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Favourite Cuisines</span>
-                  <span className="font-bold text-spice-espresso text-sm">Rajasthani, Hyderabadi &amp; Awadhi</span>
+                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Reagent Delivery Cycle</span>
+                  <span className="font-bold text-spice-espresso text-sm">Monthly Cold-Chain Standing Order</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-spice-sand/20 border border-spice-border">
-                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Dietary Standard</span>
-                  <span className="font-bold text-spice-espresso text-sm">100% Pure Vegetarian &amp; Ayurvedic</span>
+                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Maintenance &amp; AMC Status</span>
+                  <span className="font-bold text-spice-espresso text-sm">24-Month Comprehensive Service Contract</span>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-spice-sand/20 border border-spice-border">
-                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Packaging Preference</span>
-                  <span className="font-bold text-spice-espresso text-sm">Airtight Tin Caddies (UV Protected)</span>
+                  <span className="text-[10px] font-bold text-spice-taupe uppercase block mb-1">Quality Assurance Standards</span>
+                  <span className="font-bold text-spice-espresso text-sm">ISO 15189 / NABL Calibrated Control Lots</span>
                 </div>
               </div>
             </div>

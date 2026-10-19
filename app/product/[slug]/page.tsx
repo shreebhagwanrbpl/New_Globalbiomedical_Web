@@ -15,7 +15,6 @@ import { Product, PackSizeOption } from '@/types/product';
 import {
   WishlistButton,
   AddToCartButton,
-  ScrollReveal,
   LUXURY_EASE,
 } from '@/components/animations/Motion';
 import {
@@ -23,18 +22,22 @@ import {
   Star,
   ShieldCheck,
   Truck,
-  Leaf,
-  Flame,
-  Clock,
-  Sparkles,
   CheckCircle2,
-  Share2,
-  Info,
   MapPin,
-  RefreshCw,
   Award,
-  Package,
+  Activity,
+  FileCheck,
+  Wrench,
+  ThermometerSnowflake,
+  Microscope,
+  PhoneCall,
+  Clock,
+  FileText,
+  MessageCircle,
+  ArrowRight,
 } from 'lucide-react';
+import { RAJASTHAN_DISTRICTS, HEADQUARTERS_INFO } from '@/data/rajasthanDistricts';
+import { GetQuoteModal } from '@/components/modals/GetQuoteModal';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -53,12 +56,12 @@ export default function ProductDetailPage() {
     }
   }, [product, addRecentlyViewed]);
 
-  // Pack sizes
+  // Pack sizes / Configuration options
   const packSizes: PackSizeOption[] = product.packSizes && product.packSizes.length > 0
     ? product.packSizes
     : [
         {
-          weight: product.weight || '100g',
+          weight: product.weight || 'Standard Configuration',
           price: product.salePrice || product.price,
           mrp: product.mrp || product.price,
           discountPercentage: product.discountPercentage || 0,
@@ -73,7 +76,15 @@ export default function ProductDetailPage() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [pincode, setPincode] = useState('');
   const [pincodeStatus, setPincodeStatus] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'about' | 'ingredients' | 'nutrition' | 'usage' | 'reviews' | 'faqs'>('about');
+  const [activeTab, setActiveTab] = useState<'about' | 'specs' | 'parameters' | 'installation' | 'reviews' | 'faqs'>('about');
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
+
+  // Auto-open quote modal if navigated from "Get Quote" card with ?quote=open
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('quote=open')) {
+      setIsQuoteModalOpen(true);
+    }
+  }, []);
 
   const currentPrice = currentPack.price;
   const currentMrp = currentPack.mrp;
@@ -82,7 +93,7 @@ export default function ProductDetailPage() {
 
   const images = product.images && product.images.length > 0
     ? product.images
-    : ['https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1000&auto=format&fit=crop&q=80'];
+    : ['https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1000&auto=format&fit=crop&q=80'];
 
   const handleAddToCart = () => {
     addToCart(product, quantity, currentPack.weight);
@@ -96,7 +107,11 @@ export default function ProductDetailPage() {
   const handleCheckPincode = (e: React.FormEvent) => {
     e.preventDefault();
     if (pincode.length === 6 && /^\d+$/.test(pincode)) {
-      setPincodeStatus(`Available! Standard delivery to ${pincode} in 2–3 business days.`);
+      if (pincode.startsWith('30') || pincode.startsWith('31') || pincode.startsWith('32') || pincode.startsWith('33') || pincode.startsWith('34')) {
+        setPincodeStatus(`Verified Rajasthan PIN ${pincode}! 24–48 hr direct dispatch with on-site biomedical engineer calibration.`);
+      } else {
+        setPincodeStatus(`Available! Standard dispatch to PIN ${pincode} in 3–5 business days with CDSCO calibration certificate.`);
+      }
     } else {
       setPincodeStatus('Please enter a valid 6-digit Indian PIN code.');
     }
@@ -117,7 +132,7 @@ export default function ProductDetailPage() {
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-spice-taupe font-medium truncate">
             <Link href="/" className="hover:text-spice-espresso">Home</Link>
             <ChevronRight className="w-3.5 h-3.5 text-spice-border-strong shrink-0" />
-            <Link href="/shop" className="hover:text-spice-espresso">Shop</Link>
+            <Link href="/shop" className="hover:text-spice-espresso">Diagnostic Equipment</Link>
             <ChevronRight className="w-3.5 h-3.5 text-spice-border-strong shrink-0" />
             <Link href={`/category/${product.category}`} className="hover:text-spice-espresso capitalize">
               {product.category.replace(/-/g, ' ')}
@@ -144,7 +159,7 @@ export default function ProductDetailPage() {
                 )}
                 {product.bestSeller && (
                   <span className="px-3 py-1 rounded-full bg-spice-espresso text-white text-xs font-bold shadow-warm-xs">
-                    BEST SELLER
+                    HOSPITAL GRADE
                   </span>
                 )}
               </div>
@@ -191,19 +206,19 @@ export default function ProductDetailPage() {
             {/* Quality Guarantees Banner */}
             <div className="grid grid-cols-3 gap-3 p-4 bg-spice-sand/30 rounded-2xl border border-spice-border text-center">
               <div className="flex flex-col items-center">
-                <Leaf className="w-4 h-4 text-spice-cardamom mb-1" />
-                <span className="text-[11px] font-bold text-spice-espresso">100% Pure</span>
-                <span className="text-[9px] text-spice-taupe">Zero Preservatives</span>
+                <Award className="w-4 h-4 text-spice-cardamom mb-1" />
+                <span className="text-[11px] font-bold text-spice-espresso">ISO 13485:2016</span>
+                <span className="text-[9px] text-spice-taupe">Medical Grade Device</span>
               </div>
               <div className="flex flex-col items-center">
                 <ShieldCheck className="w-4 h-4 text-spice-terracotta mb-1" />
-                <span className="text-[11px] font-bold text-spice-espresso">24 Lab Tests</span>
-                <span className="text-[9px] text-spice-taupe">FSSAI Certified</span>
+                <span className="text-[11px] font-bold text-spice-espresso">NABL Calibrated</span>
+                <span className="text-[9px] text-spice-taupe">Traceable QC Report</span>
               </div>
               <div className="flex flex-col items-center">
-                <Truck className="w-4 h-4 text-spice-turmeric mb-1" />
-                <span className="text-[11px] font-bold text-spice-espresso">Fast Shipping</span>
-                <span className="text-[9px] text-spice-taupe">Pan-India Dispatch</span>
+                <Wrench className="w-4 h-4 text-spice-turmeric mb-1" />
+                <span className="text-[11px] font-bold text-spice-espresso">Engineer Install</span>
+                <span className="text-[9px] text-spice-taupe">Rajasthan On-Site Demo</span>
               </div>
             </div>
           </div>
@@ -216,7 +231,7 @@ export default function ProductDetailPage() {
               {/* Brand & Category */}
               <div className="flex items-center justify-between gap-2 text-xs font-semibold text-spice-taupe mb-2">
                 <span className="text-spice-cardamom font-bold uppercase tracking-wider">
-                  {product.brand || 'AAXOL'} • {product.origin || 'India'}
+                  {product.brand || 'Human Biomedical LLP'} • {product.origin || 'Jaipur Hub'}
                 </span>
                 <span className="capitalize">{product.category.replace(/-/g, ' ')}</span>
               </div>
@@ -226,7 +241,7 @@ export default function ProductDetailPage() {
                 {product.title}
               </h1>
 
-              {/* Flavour & Aroma Tagline */}
+              {/* Technical / Clinical Tagline */}
               {product.flavourProfile && (
                 <p className="text-sm font-medium text-spice-terracotta italic mb-3">
                   "{product.flavourProfile}"
@@ -237,53 +252,61 @@ export default function ProductDetailPage() {
               <div className="flex items-center gap-3 mb-5">
                 <div className="flex items-center gap-1 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 text-amber-700 text-xs font-bold">
                   <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                  <span>{product.rating || 4.8}</span>
+                  <span>{product.rating || 4.9}</span>
                 </div>
                 <span className="text-xs text-spice-taupe">
-                  Based on <strong>{product.reviewCount || 42}</strong> verified customer reviews
+                  Trusted by <strong>{product.reviewCount || 68}</strong> diagnostic centers &amp; labs in Rajasthan
                 </span>
                 <span className="text-xs text-spice-cardamom font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5" /> In Stock
+                  <CheckCircle2 className="w-3.5 h-3.5" /> Direct Lab Dispatch
                 </span>
               </div>
 
-              {/* Price & Savings Display */}
-              <div className="bg-spice-sand/20 rounded-2xl p-4 border border-spice-border mb-6">
-                <div className="flex items-baseline gap-3 flex-wrap">
-                  <span className="text-3xl sm:text-4xl font-bold text-spice-espresso">
-                    {formatCurrency(currentPrice)}
-                  </span>
-                  {currentMrp > currentPrice && (
-                    <span className="text-base sm:text-lg text-spice-taupe line-through">
-                      {formatCurrency(currentMrp)}
+              {/* Blurred Institutional Price Section */}
+              <div className="relative overflow-hidden rounded-2xl p-5 bg-slate-50 border border-slate-200/90 mb-6">
+                {/* The actual figures are deeply blurred */}
+                <div className="filter blur-[10px] select-none pointer-events-none opacity-40 space-y-2">
+                  <div className="flex items-baseline gap-3 flex-wrap">
+                    <span className="text-3xl sm:text-4xl font-black text-slate-900">
+                      {formatCurrency(currentPrice)}
                     </span>
-                  )}
-                  {currentDiscount > 0 && (
-                    <span className="px-2.5 py-1 rounded-md bg-spice-terracotta text-white text-xs font-bold">
-                      {currentDiscount}% OFF
+                    {currentMrp > currentPrice && (
+                      <span className="text-base sm:text-lg text-slate-400 line-through">
+                        {formatCurrency(currentMrp)}
+                      </span>
+                    )}
+                    <span className="px-2.5 py-1 rounded-md bg-emerald-600 text-white text-xs font-bold">
+                      INSTITUTIONAL TARIFF
                     </span>
-                  )}
+                  </div>
+                  <p className="text-xs font-bold text-slate-600">
+                    ✓ Institutional Wholesale Price: Confidential hospital and laboratory discounted slab with GST invoice.
+                  </p>
                 </div>
 
-                {currentSavings > 0 && (
-                  <p className="text-xs font-bold text-spice-cardamom mt-1.5">
-                    🎉 You save {formatCurrency(currentSavings)} on this {currentPack.weight} pack. (Inclusive of all taxes)
+                {/* Confidential Overlay Callout */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center p-3 text-center bg-slate-900/10 backdrop-blur-[2px]">
+                  <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-md tracking-wide">
+                    <span>🔒 Institutional Price Confidential</span>
+                  </div>
+                  <p className="text-xs text-slate-700 font-semibold mt-1.5">
+                    Click <strong>&quot;Get Official Quote&quot;</strong> below to receive instant B2B quotation for your facility.
                   </p>
-                )}
+                </div>
               </div>
 
-              {/* Pack Size Selector */}
+              {/* Pack Size / Variant Selector */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-2.5">
-                  <span className="text-xs font-bold text-spice-espresso uppercase tracking-wider">
-                    Select Pack Size / Weight:
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                    Select Configuration / Pack Size:
                   </span>
-                  <span className="text-xs text-spice-taupe">
-                    Selected: <strong className="text-spice-espresso">{currentPack.weight}</strong>
+                  <span className="text-xs text-slate-500">
+                    Selected: <strong className="text-slate-900">{currentPack.weight}</strong>
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                   {packSizes.map((pack, idx) => (
                     <button
                       key={pack.weight}
@@ -291,60 +314,49 @@ export default function ProductDetailPage() {
                       onClick={() => setSelectedPackIndex(idx)}
                       className={`p-3 rounded-xl border text-center transition-all ${
                         selectedPackIndex === idx
-                          ? 'border-spice-espresso bg-spice-espresso text-white shadow-warm-xs'
-                          : 'border-spice-border bg-white text-spice-espresso hover:border-spice-terracotta'
+                          ? 'border-slate-900 bg-slate-900 text-white shadow-xs'
+                          : 'border-slate-200 bg-white text-slate-800 hover:border-red-500'
                       }`}
                     >
-                      <span className="block font-bold text-sm">{pack.weight}</span>
-                      <span className={`block text-xs mt-0.5 ${selectedPackIndex === idx ? 'text-spice-sand' : 'text-spice-taupe'}`}>
-                        {formatCurrency(pack.price)}
+                      <span className="block font-bold text-xs truncate">{pack.weight}</span>
+                      <span className={`block text-[11px] mt-0.5 font-semibold ${selectedPackIndex === idx ? 'text-amber-300' : 'text-emerald-700'}`}>
+                        🔒 Rate on Quote
                       </span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Quantity & Actions */}
+              {/* Primary Quotation Actions */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 mb-6">
-                {/* Quantity Control */}
-                <div className="flex items-center justify-between border border-spice-border bg-white rounded-xl px-3 py-2 sm:w-32">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="text-lg font-bold text-spice-taupe hover:text-spice-espresso w-6 text-center"
-                  >
-                    -
-                  </button>
-                  <span className="font-bold text-sm text-spice-espresso">{quantity}</span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="text-lg font-bold text-spice-taupe hover:text-spice-espresso w-6 text-center"
-                  >
-                    +
-                  </button>
-                </div>
-
-                {/* Add to Cart Button */}
-                <AddToCartButton
-                  onAdd={handleAddToCart}
-                  className="flex-1 py-3 text-sm font-bold"
-                />
-
-                {/* Buy Now Button */}
-                <Button
-                  variant="secondary"
-                  size="md"
-                  onClick={handleBuyNow}
-                  className="py-3 px-6 text-sm font-bold shrink-0"
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteModalOpen(true)}
+                  className="flex-1 py-3.5 px-6 rounded-xl bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-red-600/25 transition-all transform hover:-translate-y-0.5 cursor-pointer"
                 >
-                  Buy Now
-                </Button>
+                  <FileText className="w-5 h-5" />
+                  <span>Get Official Quote</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                <a
+                  href={`https://wa.me/919829088234?text=${encodeURIComponent(
+                    `Hello Human Biomedical LLP, I would like to receive an official price quote for ${product.title} (${currentPack.weight}).`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3.5 px-5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-all shrink-0"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>WhatsApp Quote</span>
+                </a>
               </div>
 
               {/* Pincode Delivery Checker */}
               <div className="p-4 bg-white rounded-2xl border border-spice-border mb-6">
                 <div className="flex items-center gap-2 text-xs font-bold text-spice-espresso mb-2">
                   <MapPin className="w-4 h-4 text-spice-terracotta" />
-                  <span>Check Delivery Timelines &amp; COD Availability</span>
+                  <span>Check Rajasthan District Delivery &amp; Engineer Availability</span>
                 </div>
                 <form onSubmit={handleCheckPincode} className="flex gap-2">
                   <input
@@ -352,11 +364,11 @@ export default function ProductDetailPage() {
                     maxLength={6}
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
-                    placeholder="Enter 6-digit Pincode (e.g. 302001)"
+                    placeholder="Enter 6-digit PIN (e.g. 341001 for Nagaur, 302021 for Jaipur)"
                     className="flex-1 px-3 py-2 rounded-xl border border-spice-border text-xs focus:outline-none focus:border-spice-terracotta"
                   />
                   <Button type="submit" variant="outline" size="sm">
-                    Check
+                    Verify
                   </Button>
                 </form>
                 {pincodeStatus && (
@@ -364,6 +376,12 @@ export default function ProductDetailPage() {
                     {pincodeStatus}
                   </p>
                 )}
+              </div>
+
+              {/* Direct Support Hotline */}
+              <div className="flex items-center gap-3 p-3 bg-spice-cardamom-50 rounded-xl border border-spice-cardamom-200 text-xs text-spice-cardamom font-semibold">
+                <PhoneCall className="w-4 h-4 shrink-0 text-spice-cardamom" />
+                <span>Need quotation or institutional demo? Call Biomedical Desk: <a href="tel:+919829088234" className="underline font-bold">+91 98290 88234</a></span>
               </div>
             </div>
           </div>
@@ -376,11 +394,11 @@ export default function ProductDetailPage() {
           {/* Tab Navigation */}
           <div className="flex items-center gap-2 overflow-x-auto pb-4 border-b border-spice-border">
             {[
-              { id: 'about', label: 'About the Spice' },
-              { id: 'ingredients', label: 'Ingredients & Origin' },
-              { id: 'usage', label: 'How to Use & Pairings' },
-              { id: 'nutrition', label: 'Nutritional Values' },
-              { id: 'reviews', label: `Reviews (${product.reviewCount || 42})` },
+              { id: 'about', label: 'Technical Overview' },
+              { id: 'specs', label: 'Specifications & Standards' },
+              { id: 'parameters', label: 'Clinical Parameters' },
+              { id: 'installation', label: 'Rajasthan Support & Warranty' },
+              { id: 'reviews', label: `Lab Reviews (${product.reviewCount || 68})` },
               { id: 'faqs', label: 'FAQs' },
             ].map((tab) => (
               <button
@@ -402,7 +420,7 @@ export default function ProductDetailPage() {
             {activeTab === 'about' && (
               <div className="space-y-4 max-w-3xl">
                 <h3 className="font-serif font-bold text-xl text-spice-espresso">
-                  The Story Behind {product.title}
+                  Clinical Performance &amp; Engineering Overview
                 </h3>
                 <p className="text-sm text-spice-taupe leading-relaxed">
                   {product.description}
@@ -410,60 +428,61 @@ export default function ProductDetailPage() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4">
                   <div className="p-3.5 bg-spice-sand/20 rounded-xl border border-spice-border">
-                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Spice Level</span>
-                    <span className="text-sm font-bold text-spice-espresso">{product.spiceLevel || 'Medium'}</span>
+                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Device Grade</span>
+                    <span className="text-sm font-bold text-spice-espresso">{product.spiceLevel ? `Medical Standard (${product.spiceLevel})` : 'Class B / C IVD Device'}</span>
                   </div>
                   <div className="p-3.5 bg-spice-sand/20 rounded-xl border border-spice-border">
-                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Shelf Life</span>
-                    <span className="text-sm font-bold text-spice-espresso">{product.shelfLife || '12 Months'}</span>
+                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Warranty / AMC</span>
+                    <span className="text-sm font-bold text-spice-espresso">{product.shelfLife || '12–24 Months Comprehensive'}</span>
                   </div>
                   <div className="p-3.5 bg-spice-sand/20 rounded-xl border border-spice-border">
-                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Storage</span>
-                    <span className="text-sm font-bold text-spice-espresso">{product.storage || 'Airtight container'}</span>
+                    <span className="text-[11px] font-bold text-spice-taupe block uppercase">Storage &amp; Operation</span>
+                    <span className="text-sm font-bold text-spice-espresso">{product.storage || '15°C – 30°C Air-Conditioned'}</span>
                   </div>
                 </div>
               </div>
             )}
 
-            {activeTab === 'ingredients' && (
+            {activeTab === 'specs' && (
               <div className="space-y-4 max-w-3xl">
                 <h3 className="font-serif font-bold text-xl text-spice-espresso">
-                  100% Pure Natural Ingredients
+                  Compliance, Calibration &amp; Standards
                 </h3>
                 <p className="text-sm text-spice-taupe">
-                  Every batch is formulated from authentic Indian harvests with zero adulterants or additives:
+                  All equipment and reagents delivered by Human Biomedical LLP conform strictly to Indian and international in-vitro diagnostic standards:
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {product.ingredients.map((ing, i) => (
-                    <span key={i} className="px-3 py-1 rounded-lg bg-spice-sand/40 border border-spice-border text-xs font-semibold text-spice-espresso">
-                      🌿 {ing}
+                  {product.ingredients.map((spec, i) => (
+                    <span key={i} className="px-3 py-1.5 rounded-lg bg-spice-sand/40 border border-spice-border text-xs font-semibold text-spice-espresso flex items-center gap-1.5">
+                      <ShieldCheck className="w-3.5 h-3.5 text-spice-cardamom" /> {spec}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-4 p-4 bg-spice-cardamom-50 rounded-xl border border-spice-cardamom-200 text-xs text-spice-cardamom font-medium">
-                  <strong>FSSAI License:</strong> {product.fssaiInformation?.licenseNumber || '10022011000492'} | Country of Origin: {product.countryOfOrigin || 'India'}
+                <div className="mt-4 p-4 bg-spice-cardamom-50 rounded-xl border border-spice-cardamom-200 text-xs text-spice-cardamom font-medium space-y-1">
+                  <div><strong>Registered Office:</strong> {HEADQUARTERS_INFO.address}</div>
+                  <div><strong>Regulatory Status:</strong> CDSCO Registered Medical Device | ISO 13485:2016 Quality Management</div>
                 </div>
               </div>
             )}
 
-            {activeTab === 'usage' && (
+            {activeTab === 'parameters' && (
               <div className="space-y-4 max-w-3xl">
                 <h3 className="font-serif font-bold text-xl text-spice-espresso">
-                  Culinary Suggestions &amp; Best Pairings
+                  Diagnostic Applications &amp; Tested Parameters
                 </h3>
                 <p className="text-sm text-spice-taupe leading-relaxed">
-                  {product.usage || 'Add during tempering (tadka) or mix directly into simmering curries, gravies, and marinades.'}
+                  {product.usage || 'Engineered for high-precision diagnostic throughput across hospital laboratories, standalone pathology centers, and clinical investigation units.'}
                 </p>
                 {product.bestFor && product.bestFor.length > 0 && (
                   <div>
                     <span className="text-xs font-bold text-spice-espresso uppercase block mb-2">
-                      Best Paired With:
+                      Key Clinical Diagnostic Capabilities:
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {product.bestFor.map((item, i) => (
-                        <span key={i} className="px-3 py-1 rounded-full bg-spice-peach/40 text-spice-terracotta text-xs font-bold">
-                          ✨ {item}
+                        <span key={i} className="px-3 py-1.5 rounded-full bg-spice-peach/40 text-spice-terracotta text-xs font-bold flex items-center gap-1">
+                          <Activity className="w-3.5 h-3.5" /> {item}
                         </span>
                       ))}
                     </div>
@@ -472,35 +491,30 @@ export default function ProductDetailPage() {
               </div>
             )}
 
-            {activeTab === 'nutrition' && (
-              <div className="max-w-2xl space-y-4">
+            {activeTab === 'installation' && (
+              <div className="max-w-3xl space-y-4">
                 <h3 className="font-serif font-bold text-xl text-spice-espresso">
-                  Nutritional Facts (Per 100g)
+                  Comprehensive Rajasthan Engineer Network &amp; On-Site Training
                 </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <p className="text-sm text-spice-taupe leading-relaxed">
+                  Human Biomedical LLP maintains dedicated field service engineers stationed across Jaipur, Jodhpur, Kota, Bikaner, Udaipur, and Nagaur. Every instrument order includes:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-spice-espresso">
                   <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Energy</span>
-                    <span className="text-sm font-bold text-spice-espresso block">{product.nutritionalInformation?.energyKcal || 340} kcal</span>
+                    <span className="font-bold block text-sm mb-1">✓ On-Site Installation</span>
+                    <span>Direct setup in your laboratory by certified biomedical engineers within 24–48 hours of delivery.</span>
                   </div>
                   <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Protein</span>
-                    <span className="text-sm font-bold text-spice-espresso block">{product.nutritionalInformation?.proteinG || 12} g</span>
+                    <span className="font-bold block text-sm mb-1">✓ Technician Training</span>
+                    <span>Complete operational, maintenance, and quality control calibration training for your lab staff.</span>
                   </div>
                   <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Carbohydrates</span>
-                    <span className="text-sm font-bold text-spice-espresso block">{product.nutritionalInformation?.carbohydratesG || 55} g</span>
+                    <span className="font-bold block text-sm mb-1">✓ Continuous Reagent Supply</span>
+                    <span>Guaranteed cold-chain delivery of matching reagents and consumables across all 50 districts.</span>
                   </div>
                   <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Dietary Fibre</span>
-                    <span className="text-sm font-bold text-spice-espresso block">21 g</span>
-                  </div>
-                  <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Fat</span>
-                    <span className="text-sm font-bold text-spice-espresso block">{product.nutritionalInformation?.fatG || 8} g</span>
-                  </div>
-                  <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border">
-                    <span className="text-[11px] text-spice-taupe">Sodium</span>
-                    <span className="text-sm font-bold text-spice-espresso block">{product.nutritionalInformation?.sodiumMg || 30} mg</span>
+                    <span className="font-bold block text-sm mb-1">✓ Annual Maintenance (AMC/CMC)</span>
+                    <span>Preventive maintenance schedules, emergency breakdown repair, and genuine spare parts backing.</span>
                   </div>
                 </div>
               </div>
@@ -510,11 +524,11 @@ export default function ProductDetailPage() {
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
                   <h3 className="font-serif font-bold text-xl text-spice-espresso">
-                    Customer Testimonials
+                    Verified Pathologist &amp; Lab Director Feedback
                   </h3>
                   <div className="flex items-center gap-1 text-amber-500 font-bold text-sm">
                     <Star className="w-4 h-4 fill-current" />
-                    <span>{product.rating || 4.8} / 5.0 Rating</span>
+                    <span>{product.rating || 4.9} / 5.0 Rating</span>
                   </div>
                 </div>
 
@@ -558,14 +572,14 @@ export default function ProductDetailPage() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h3 className="font-serif font-bold text-xl sm:text-2xl text-spice-espresso">
-                  Complete Your Spice Shelf
+                  Complementary Clinical Equipment &amp; Reagents
                 </h3>
                 <p className="text-xs sm:text-sm text-spice-taupe">
-                  Pair with complementary single-origin aromatics and masalas.
+                  Pair with compatible controls, calibrators, and diagnostic instruments.
                 </p>
               </div>
               <Link href="/shop" className="text-xs font-bold text-spice-terracotta hover:underline">
-                View All →
+                View All Catalog →
               </Link>
             </div>
 
@@ -578,12 +592,12 @@ export default function ProductDetailPage() {
         )}
 
         {/* =========================================================================
-            RECENTLY VIEWED SPICES
+            RECENTLY VIEWED
         ========================================================================= */}
         {recentlyViewed.length > 1 && (
           <div className="mt-16 pt-10 border-t border-spice-border">
             <h3 className="font-serif font-bold text-lg sm:text-xl text-spice-espresso mb-4">
-              Recently Viewed Spices
+              Recently Viewed Diagnostic Products
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
               {recentlyViewed.filter(p => p.id !== product.id).slice(0, 6).map((p) => (
@@ -595,33 +609,41 @@ export default function ProductDetailPage() {
       </Container>
 
       {/* =========================================================================
-          MOBILE STICKY ADD TO CART BAR
+          MOBILE STICKY GET QUOTE BAR
       ========================================================================= */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-spice-border p-3 shadow-warm-lg flex items-center justify-between gap-3">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-lg flex items-center justify-between gap-3">
         <div>
-          <span className="text-[10px] text-spice-taupe block font-medium">
-            {currentPack.weight} Pack
+          <span className="text-[10px] text-slate-500 block font-medium">
+            {currentPack.weight}
           </span>
-          <span className="text-base font-bold text-spice-espresso">
-            {formatCurrency(currentPrice)}
+          <span className="text-xs font-bold text-slate-900 flex items-center gap-1">
+            🔒 Rate on Quote
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <AddToCartButton
-            onAdd={handleAddToCart}
-            className="py-2.5 px-4 text-xs font-bold"
-          />
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={handleBuyNow}
-            className="py-2.5 px-4 text-xs font-bold"
-          >
-            Buy Now
-          </Button>
-        </div>
+        <button
+          type="button"
+          onClick={() => setIsQuoteModalOpen(true)}
+          className="py-2.5 px-5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm cursor-pointer"
+        >
+          <FileText className="w-4 h-4" />
+          <span>Get Quote</span>
+        </button>
       </div>
+
+      {/* Official Get Quote Modal */}
+      <GetQuoteModal
+        isOpen={isQuoteModalOpen}
+        onClose={() => setIsQuoteModalOpen(false)}
+        product={{
+          id: product.id,
+          title: product.title,
+          image: images[0],
+          category: product.category,
+          slug: product.slug,
+          weight: currentPack.weight,
+        }}
+      />
     </div>
   );
 }

@@ -8,7 +8,7 @@ import { formatCurrency } from '@/utils/currency';
 import { useStore } from '@/context/StoreContext';
 import { staticProducts } from '@/data/products';
 import { ScrollReveal, AddToCartButton, LUXURY_EASE } from '@/components/animations/Motion';
-import { Flame, Clock, ArrowRight, Sparkles, ShieldCheck } from 'lucide-react';
+import { Flame, Clock, ArrowRight, Sparkles, ShieldCheck, FileText } from 'lucide-react';
 
 export function FlashSaleSection() {
   const { addToCart } = useStore();
@@ -58,13 +58,13 @@ export function FlashSaleSection() {
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-spice-terracotta/10 text-spice-terracotta text-xs font-bold uppercase tracking-wider mb-3">
                 <Flame className="w-3.5 h-3.5 text-spice-terracotta animate-bounce" />
-                <span>LIMITED TIME LIGHTNING DEALS</span>
+                <span>DIRECT INSTITUTIONAL PROMOTIONS</span>
               </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-spice-espresso tracking-tight">
-                FLASH SPICE SALE
+                FLASH BIOMEDICAL DISPATCH DEALS
               </h2>
               <p className="text-sm sm:text-base text-spice-taupe mt-1.5 max-w-xl">
-                Exclusive limited-time prices on kitchen staples. Freshly cold-ground and sealed for maximum aroma.
+                Special institutional pricing on clinical laboratory analyzers, POCT test kits, and diagnostic reagents. Direct dispatch across Rajasthan from Jaipur Hub.
               </p>
             </div>
 
@@ -119,13 +119,13 @@ export function FlashSaleSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.1, ease: LUXURY_EASE }}
-                whileHover={{ y: -4 }}
-                className="bg-white rounded-2xl border border-spice-border hover:border-spice-terracotta/40 p-4 shadow-warm-xs hover:shadow-warm-md transition-all flex flex-col justify-between h-full"
+                whileHover={{ y: -3 }}
+                className="bg-white rounded-2xl border border-slate-200/90 hover:border-red-500/70 p-3.5 shadow-xs hover:shadow-lg hover:shadow-slate-200/50 transition-all flex flex-col justify-between h-full"
               >
                 <div>
                   {/* Badge & Image */}
-                  <div className="relative aspect-square rounded-xl overflow-hidden bg-spice-sand/30 mb-3.5 group">
-                    <span className="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full bg-spice-terracotta text-white text-[11px] font-bold shadow-warm-xs">
+                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-slate-100 mb-3 group">
+                    <span className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-red-600 text-white text-[10px] font-bold shadow-xs">
                       {item.badge}
                     </span>
 
@@ -133,59 +133,72 @@ export function FlashSaleSection() {
                       <img
                         src={item.image}
                         alt={item.title}
-                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
+                        className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-500 ease-out"
                       />
                     </Link>
                   </div>
 
                   {/* Category & Title */}
-                  <span className="text-[11px] text-spice-taupe font-medium block mb-1">
+                  <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider block mb-1">
                     {item.category}
                   </span>
-                  <Link href={`/product/${item.slug}`} className="hover:text-spice-terracotta transition-colors">
-                    <h3 className="font-serif font-bold text-base text-spice-espresso line-clamp-1 mb-1">
+                  <Link href={`/product/${item.slug}`} className="hover:text-red-600 transition-colors">
+                    <h3 className="font-bold text-xs sm:text-sm text-slate-900 line-clamp-1 mb-1">
                       {item.title}
                     </h3>
                   </Link>
-                  <p className="text-xs text-spice-taupe line-clamp-1 mb-3">
+                  <p className="text-[11px] text-slate-500 line-clamp-1 mb-2.5">
                     {item.flavourNote}
                   </p>
 
-                  {/* Price & Savings */}
-                  <div className="flex items-baseline justify-between gap-1 mb-3">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-spice-espresso">
-                        {formatCurrency(item.salePrice)}
-                      </span>
-                      <span className="text-xs text-spice-taupe line-through">
-                        {formatCurrency(item.mrp)}
+                  {/* Blurred Price & Savings Container */}
+                  <div className="relative mb-2.5 overflow-hidden rounded-xl bg-slate-50/90 p-2 border border-slate-200/90">
+                    <div className="flex items-center justify-between gap-1 filter blur-[8px] select-none pointer-events-none opacity-50">
+                      <div className="flex items-baseline gap-1.5 truncate">
+                        <span className="text-base font-extrabold text-slate-900">
+                          {formatCurrency(item.salePrice)}
+                        </span>
+                        <span className="text-xs text-slate-400 line-through">
+                          {formatCurrency(item.mrp)}
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded shrink-0">
+                        Save {formatCurrency(item.savings)}
                       </span>
                     </div>
-                    <span className="text-xs font-bold text-spice-cardamom bg-spice-cardamom-50 px-2 py-0.5 rounded">
-                      Save {formatCurrency(item.savings)}
-                    </span>
+
+                    {/* Confidential Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[10.5px] font-bold shadow-xs tracking-wide">
+                        <span>🔒 Rate on Quotation</span>
+                      </span>
+                    </div>
                   </div>
 
                   {/* Stock Progress Bar */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between text-[11px] font-semibold text-spice-taupe mb-1">
-                      <span className="text-spice-terracotta font-bold">Only {item.stockLeft} left</span>
+                  <div className="mb-3">
+                    <div className="flex items-center justify-between text-[10.5px] font-semibold text-slate-500 mb-1">
+                      <span className="text-red-600 font-bold">Only {item.stockLeft} left</span>
                       <span>{claimedPercentage}% Claimed</span>
                     </div>
-                    <div className="w-full h-2 bg-spice-sand/60 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-gradient-to-r from-spice-turmeric to-spice-terracotta rounded-full transition-all duration-1000"
+                        className="h-full bg-gradient-to-r from-amber-400 to-red-600 rounded-full transition-all duration-1000"
                         style={{ width: `${claimedPercentage}%` }}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Add to Cart */}
-                <AddToCartButton
-                  onAdd={() => addToCart(product as any, 1, '100g')}
-                  className="w-full text-xs sm:text-sm py-2"
-                />
+                {/* Get Official Quote Link to PDP */}
+                <Link
+                  href={`/product/${item.slug}?quote=open`}
+                  className="w-full text-xs font-bold py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center gap-1.5 shadow-xs transition-all hover:shadow-md"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Get Official Quote</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </motion.div>
             );
           })}

@@ -5,7 +5,7 @@ export async function GET() {
     status: 'healthy',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
-    service: 'AAXOL Node.js Web Server',
+    service: 'Human Biomedical LLP Web Server',
     environment: process.env.NODE_ENV || 'development',
   });
 }

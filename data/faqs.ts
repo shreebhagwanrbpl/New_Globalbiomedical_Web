@@ -2,56 +2,56 @@ export interface FAQItem {
   id: string;
   question: string;
   answer: string;
-  category: 'Purity & Quality' | 'Sourcing' | 'Storage & Freshness' | 'Shipping & Orders' | 'Gifting & Returns';
+  category: 'Equipment & Accuracy' | 'Rajasthan Delivery & Hubs' | 'Warranty & AMC' | 'Reagents & Storage' | 'Lab Setup';
 }
 
 export const staticFAQs: FAQItem[] = [
   {
     id: 'faq-1',
-    category: 'Purity & Quality',
-    question: 'Are your spices 100% pure and free of artificial additives or dyes?',
-    answer: 'Yes, absolutely. Every spice and blended masala is 100% pure, unadulterated, and free from added colours (like Sudan red or metanil yellow), artificial flavours, preservatives, anti-caking agents, or fillers. We process in certified small-batch facilities with strict zero-contamination protocols.'
+    category: 'Equipment & Accuracy',
+    question: 'Are Human Biomedical analyzers compliant with NABL and international diagnostic standards?',
+    answer: 'Yes, absolutely. All our Hematology Analyzers, Biochemistry Systems, and Rapid POCT kits are manufactured in ISO 13485:2016 and CE certified facilities. Every instrument is calibrated against international reference standards and supplied with factory calibration certificates required for NABL accreditation.',
   },
   {
     id: 'faq-2',
-    category: 'Sourcing',
-    question: 'Where are your spices sourced from?',
-    answer: 'We practice single-origin direct sourcing from native heritage micro-regions across India: Lakadong Turmeric from Jaintia Hills Meghalaya, Mathania Chillies from Jodhpur, Green Cardamom from Idukki Kerala, Tellicherry Black Pepper from Malabar Coast, Mongra Saffron from Pampore Kashmir, and Cumin from Unjha Gujarat.'
+    category: 'Rajasthan Delivery & Hubs',
+    question: 'Do you deliver and install in Nagaur and other districts across Rajasthan?',
+    answer: 'Yes! Human Biomedical LLP delivers to all 50 districts of Rajasthan, including Nagaur, Jaipur, Jodhpur, Kota, Bikaner, Ajmer, Udaipur, Bhilwara, Alwar, and Sikar. We operate direct daily dispatch from our Central Headquarters on 200 Feet Bypass Road, Jaipur, ensuring 24-48 hour delivery to any district hospital, clinic, or diagnostic laboratory.',
   },
   {
     id: 'faq-3',
-    category: 'Storage & Freshness',
-    question: 'How long do your spices stay fresh and how should they be stored?',
-    answer: 'Our ground spices retain peak aroma for 12 months, and whole spices for up to 24 months. Store them in airtight glass jars or opaque tins away from direct sunlight, moisture, and high heat. Never use a wet spoon inside the spice container.'
+    category: 'Equipment & Accuracy',
+    question: 'Are your CBC and Biochemistry reagents compatible with other analyzer brands like Mindray, Sysmex, and Erba?',
+    answer: 'Yes. Our universal liquid-stable CBC diluents, lysing reagents, and clinical biochemistry kits (LFT, KFT, Lipid, Glucose) are formulated for open and universal analyzer platforms, delivering 100% correlation with Mindray, Sysmex, Erba Mannheim, Nihon Kohden, and Human Biomedical counters with low background counts and exceptional linearity.',
   },
   {
     id: 'faq-4',
-    category: 'Shipping & Orders',
-    question: 'Do you ship pan-India and what are the delivery timelines?',
-    answer: 'We deliver to over 24,000 pincodes across India. Metro orders are delivered in 2-3 business days, while non-metro and regional locations take 3-5 business days. We provide end-to-end live tracking for every dispatched parcel.'
+    category: 'Warranty & AMC',
+    question: 'What warranty and biomedical engineering support do you provide?',
+    answer: 'Every diagnostic instrument comes with a comprehensive 12 to 24-month on-site warranty covering parts and labor. Our team of certified biomedical field engineers visits your facility for unboxing, installation, precision calibration, and staff operation training. We also offer affordable Annual Maintenance Contracts (AMC) and Comprehensive Maintenance Contracts (CMC) across Rajasthan.',
   },
   {
     id: 'faq-5',
-    category: 'Shipping & Orders',
-    question: 'Do you ship internationally to the USA, UK, UAE, and Europe?',
-    answer: 'Yes! We ship our vacuum-sealed, export-grade spice collections worldwide via DHL Express and FedEx International. International transit typically takes 4-7 business days depending on customs clearance.'
+    category: 'Reagents & Storage',
+    question: 'How do you transport temperature-sensitive diagnostic reagents during hot Rajasthan summers?',
+    answer: 'All temperature-sensitive reagents, enzymes, calibrators, and control serums are packed in heavy-duty insulated EPS thermocol boxes with validated frozen gel packs. Temperature indicators ensure cold-chain integrity (2°C – 8°C) is strictly maintained from our Jaipur cold storage to your lab door.',
   },
   {
     id: 'faq-6',
-    category: 'Purity & Quality',
-    question: 'Are your products FSSAI certified and tested for heavy metals?',
-    answer: 'Yes, our central processing unit is FSSAI licensed (Lic No: 10022011000492) and ISO 22000 certified. Every harvest batch undergoes a 24-parameter laboratory test screening for pesticide residues, aflatoxins, and heavy metals before packaging.'
+    category: 'Lab Setup',
+    question: 'Can Human Biomedical LLP assist with establishing a new turnkey pathology laboratory?',
+    answer: 'Yes, we specialize in complete turnkey pathology laboratory setups! We provide end-to-end guidance from instrument selection (Hematology, Biochemistry, Centrifuge, Microscope, Electrolyte Analyzer, POCT) to lab layout design, electrical/water prerequisites, NABL compliance documentation, and starter reagent packages.',
   },
   {
     id: 'faq-7',
-    category: 'Gifting & Returns',
-    question: 'What is your return and replacement policy?',
-    answer: 'We offer a 100% Satisfaction Guarantee. If your order arrives damaged, unsealed, or if you are unsatisfied with the quality, we will arrange an instant free replacement or full refund within 7 days of delivery.'
+    category: 'Warranty & AMC',
+    question: 'How quickly does a biomedical engineer respond in case of an equipment emergency breakdown?',
+    answer: 'We provide 24/7 technical telephone & video diagnostics support. For critical breakdown calls, an on-site biomedical engineer is dispatched within 4 to 24 hours depending on the district location in Rajasthan, with emergency backup spare parts readily stocked at our Jaipur HQ.',
   },
   {
     id: 'faq-8',
-    category: 'Gifting & Returns',
-    question: 'Can I order custom corporate gift boxes or wedding favours?',
-    answer: 'Yes, we curate custom engraved wooden spice boxes, festive Diwali hampers, and bespoke wedding favours with custom branding and personalised greeting cards. Contact us via our concierge email or WhatsApp for bulk custom orders.'
-  }
+    category: 'Lab Setup',
+    question: 'Where is your head office located and can we view live machine demonstrations?',
+    answer: 'Our official corporate headquarters and demonstration center is located at: F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, on Ajmer-Delhi, 200 Feet Bypass Rd, Jaipur, Rajasthan 302021. Pathologists, doctors, and lab owners are welcome to visit our experience center for live equipment demonstrations.',
+  },
 ];

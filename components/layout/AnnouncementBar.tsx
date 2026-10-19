@@ -1,106 +1,72 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Truck, Gift, Sparkles, ChevronRight, X } from 'lucide-react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-
-export interface AnnouncementItem {
-  id: string;
-  icon?: 'truck' | 'gift' | 'sparkles';
-  text: string;
-  highlightText?: string;
-  linkText?: string;
-  linkHref?: string;
-}
-
-const DEFAULT_ANNOUNCEMENTS: AnnouncementItem[] = [
-  {
-    id: '1',
-    icon: 'truck',
-    text: 'Free Express Shipping Across India & Global Delivery on Orders Above ₹999',
-    highlightText: 'Free Shipping',
-    linkText: 'Shop Spices',
-    linkHref: '/shop',
-  },
-  {
-    id: '2',
-    icon: 'gift',
-    text: 'Get 10% OFF on your first handcrafted order — Use code',
-    highlightText: 'AAXOL10',
-    linkText: 'Claim Offer',
-    linkHref: '/offers',
-  },
-  {
-    id: '3',
-    icon: 'sparkles',
-    text: 'Stone-ground, single-origin Malabar Black Pepper now in stock',
-    highlightText: 'New Harvest',
-    linkText: 'Explore',
-    linkHref: '/product/malabar-black-pepper',
-  },
-];
+import { Phone, MapPin, Wrench, X, ArrowRight } from 'lucide-react';
+import { Container } from '@/components/common';
 
 export function AnnouncementBar() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    if (DEFAULT_ANNOUNCEMENTS.length <= 1) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % DEFAULT_ANNOUNCEMENTS.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, []);
 
   if (!isVisible) return null;
 
-  const current = DEFAULT_ANNOUNCEMENTS[currentIndex];
-
-  const renderIcon = () => {
-    switch (current.icon) {
-      case 'truck':
-        return <Truck className="w-3.5 h-3.5 text-spice-turmeric shrink-0" />;
-      case 'gift':
-        return <Gift className="w-3.5 h-3.5 text-spice-turmeric shrink-0" />;
-      case 'sparkles':
-        return <Sparkles className="w-3.5 h-3.5 text-spice-turmeric shrink-0" />;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className="relative bg-spice-cardamom text-spice-ivory text-[11px] sm:text-xs py-2 px-4 select-none z-50 border-b border-spice-cardamom-700/40">
-      <div className="max-w-7xl mx-auto flex items-center justify-center text-center">
-        <div className="flex items-center gap-2 overflow-hidden animate-fadeIn">
-          {renderIcon()}
-          <span className="font-normal text-spice-ivory">
-            {current.text}{' '}
-            {current.highlightText && (
-              <span className="font-semibold text-spice-turmeric underline underline-offset-2">
-                {current.highlightText}
-              </span>
-            )}
-          </span>
-          {current.linkText && current.linkHref && (
-            <Link
-              href={current.linkHref}
-              className="inline-flex items-center gap-0.5 ml-1 text-spice-ivory font-semibold hover:text-spice-turmeric transition-colors group"
+    <div className="bg-slate-900 text-slate-300 border-b border-slate-800/80 transition-all">
+      <Container size="2xl">
+        <div className="h-8 sm:h-8.5 flex items-center justify-between gap-3 text-[11px] sm:text-xs whitespace-nowrap overflow-hidden">
+          {/* Left: Contact Helplines */}
+          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+            <a
+              href="tel:+919829088234"
+              className="flex items-center gap-1.5 text-slate-200 hover:text-white transition-colors font-medium"
             >
-              <span>{current.linkText}</span>
-              <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-            </Link>
-          )}
-        </div>
-      </div>
+              <Phone className="w-3 h-3 text-red-500 shrink-0" />
+              <span>Direct Desk: <strong className="text-white font-semibold">+91 98290 88234</strong></span>
+            </a>
 
-      <button
-        onClick={() => setIsVisible(false)}
-        aria-label="Dismiss banner"
-        className="absolute right-3 top-1/2 -translate-y-1/2 text-spice-ivory/70 hover:text-spice-ivory transition-colors p-1"
-      >
-        <X className="w-3.5 h-3.5" />
-      </button>
+            <span className="text-slate-700 hidden md:inline">•</span>
+
+            <a
+              href="tel:18008902344"
+              className="hidden md:flex items-center gap-1 text-slate-300 hover:text-white transition-colors"
+            >
+              <span>Toll-Free: <strong className="text-white font-semibold">1800 890 2344</strong></span>
+            </a>
+
+            <span className="text-slate-700 hidden xl:inline">•</span>
+
+            <div className="hidden xl:flex items-center gap-1 text-slate-400">
+              <MapPin className="w-3 h-3 text-red-500 shrink-0" />
+              <span>HQ: Jaipur, Rajasthan</span>
+            </div>
+          </div>
+
+          {/* Right: Service Guarantee & Hubs Link */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="hidden lg:flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-800/90 text-slate-200 border border-slate-700/80 text-[10.5px]">
+              <Wrench className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
+              <span>Free On-Site Engineer Installation</span>
+            </div>
+
+            <Link
+              href="/rajasthan"
+              className="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 font-semibold transition-colors"
+            >
+              <span>780+ District Hubs</span>
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+
+            <button
+              onClick={() => setIsVisible(false)}
+              aria-label="Dismiss banner"
+              className="text-slate-500 hover:text-slate-300 p-1 transition-colors"
+              title="Dismiss"
+            >
+              <X className="w-3 h-3" />
+            </button>
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }

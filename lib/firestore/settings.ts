@@ -1,28 +1,29 @@
 import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/firestore';
 import type { StoreSettings } from '@/types';
+import { HEADQUARTERS_INFO } from '@/data/rajasthanDistricts';
 
 const SETTINGS_DOC_ID = 'global_settings';
 const SETTINGS_COLLECTION = 'settings';
 
 export const DEFAULT_SETTINGS: StoreSettings = {
-  storeName: 'Vedic Spices',
-  tagline: 'Handcrafted Heritage Indian Spices & Masalas',
-  supportEmail: 'care@vedicspices.com',
-  supportPhone: '+91 98765 43210',
-  address: 'Spice Heritage Estate, Kochi, Kerala, India - 682001',
-  fssaiNumber: '10020042000123',
+  storeName: 'Human Biomedical LLP',
+  tagline: 'Leading In-Vitro Diagnostic Equipment & Clinical Laboratory Supplier across Rajasthan',
+  supportEmail: 'sales@humanbiomedical.in',
+  supportPhone: '+91 98290 88234',
+  address: HEADQUARTERS_INFO.address,
+  fssaiNumber: 'CDSCO-MD-RAJ-2026',
   currency: 'INR',
   currencySymbol: '₹',
-  freeShippingThreshold: 499,
-  standardShippingFee: 50,
-  taxRatePercentage: 5,
+  freeShippingThreshold: 999,
+  standardShippingFee: 0,
+  taxRatePercentage: 12,
   maintenanceMode: false,
   socialLinks: {
-    instagram: 'https://instagram.com/vedicspices',
-    facebook: 'https://facebook.com/vedicspices',
-    youtube: 'https://youtube.com/vedicspices',
-    whatsapp: 'https://wa.me/919876543210',
+    instagram: 'https://instagram.com/humanbiomedical',
+    facebook: 'https://facebook.com/humanbiomedical',
+    youtube: 'https://youtube.com/humanbiomedical',
+    whatsapp: 'https://wa.me/919829088234',
   },
 };
 

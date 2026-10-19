@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/common';
 import { ChevronRight } from 'lucide-react';
+import { HEADQUARTERS_INFO } from '@/data/rajasthanDistricts';
 
 export default function TermsOfServicePage() {
   return (
@@ -16,10 +17,10 @@ export default function TermsOfServicePage() {
             <span className="text-spice-espresso font-bold">Terms of Service</span>
           </nav>
           <h1 className="font-serif font-bold text-3xl sm:text-4xl text-spice-espresso">
-            Terms &amp; Conditions of Sale
+            Terms &amp; Conditions of Sale &amp; Service
           </h1>
           <p className="text-xs text-spice-taupe mt-1">
-            Last Updated: 23 September 2026 • Organium Private Limited
+            Last Updated: 2026 • Human Biomedical LLP
           </p>
         </Container>
       </section>
@@ -29,35 +30,35 @@ export default function TermsOfServicePage() {
           <section className="space-y-2">
             <h2 className="font-serif font-bold text-base text-spice-espresso">1. Acceptance of Terms</h2>
             <p>
-              By accessing, browsing, or purchasing from AAXOL, you agree to be bound by these Terms and Conditions and our associated policies. If you do not agree, please refrain from using our online portal.
+              By accessing, browsing, requesting quotations, or purchasing clinical laboratory equipment and reagents from Human Biomedical LLP ("we", "us", or "company"), you agree to be bound by these Terms and Conditions. If you do not agree, please refrain from using our online diagnostic portal.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-serif font-bold text-base text-spice-espresso">2. Product Authenticity &amp; Natural Variations</h2>
+            <h2 className="font-serif font-bold text-base text-spice-espresso">2. Medical Device Classification &amp; Regulatory Compliance</h2>
             <p>
-              All our spices are agricultural products sourced from native Indian terroirs. Because we do not use artificial colour dyes (such as Sudan red) or synthetic additives, slight natural variances in colour shade, granule texture, and seasonal pungency may occur across harvest seasons.
+              All in-vitro diagnostic (IVD) analyzers, hematology instruments, biochemistry systems, and diagnostic reagents marketed and distributed by Human Biomedical LLP comply with Central Drugs Standard Control Organisation (CDSCO) regulations and ISO 13485:2016 quality management standards. Instruments must be operated by qualified laboratory personnel or medical technologists.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-serif font-bold text-base text-spice-espresso">3. Pricing &amp; Taxes</h2>
+            <h2 className="font-serif font-bold text-base text-spice-espresso">3. Pricing, GST Invoicing &amp; Institutional Tenders</h2>
             <p>
-              All product prices listed on our storefront are in Indian Rupees (INR) and are inclusive of applicable Goods and Services Tax (GST). We reserve the right to revise promotional discounts and coupon validity periods without prior individual notice.
+              All equipment and reagent prices listed are denominated in Indian Rupees (INR) and subject to applicable GST (12% or 18% depending on device/reagent classification). Institutional tax invoices with GSTIN input credit details are furnished with every consignment dispatched from our Jaipur central warehouse.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-serif font-bold text-base text-spice-espresso">4. Order Placement &amp; Cancellations</h2>
+            <h2 className="font-serif font-bold text-base text-spice-espresso">4. Equipment Installation &amp; Training in Rajasthan</h2>
             <p>
-              Orders can be modified or cancelled within 2 hours of placement before parcels enter the micro-batch stone milling and packaging phase. Once dispatched, our standard replacement policy applies.
+              For all clinical analyzers dispatched across Rajasthan districts (including Nagaur, Jaipur, Jodhpur, Kota, Bikaner, Udaipur, and Ajmer), on-site installation and technician operational training are executed by certified Human Biomedical field engineers within 24 to 48 hours of delivery.
             </p>
           </section>
 
           <section className="space-y-2">
-            <h2 className="font-serif font-bold text-base text-spice-espresso">5. Governing Law &amp; Jurisdiction</h2>
+            <h2 className="font-serif font-bold text-base text-spice-espresso">5. Registered Office &amp; Governing Jurisdiction</h2>
             <p>
-              These terms are governed by the laws of India. Any legal disputes arising in connection with orders shall be subject to the exclusive jurisdiction of the competent courts in Jaipur, Rajasthan.
+              Human Biomedical LLP Registered Office: <strong>{HEADQUARTERS_INFO.address}</strong>. Any legal disputes or claims arising in connection with orders or maintenance contracts shall be subject to the exclusive jurisdiction of the competent courts in Jaipur, Rajasthan.
             </p>
           </section>
         </div>

@@ -104,7 +104,7 @@ export function CartDrawer() {
                   </div>
                   <div>
                     <h2 className="font-serif font-bold text-lg text-spice-espresso leading-tight">
-                      Your Spice Pantry
+                      Equipment &amp; Reagents Cart
                     </h2>
                     <span className="text-xs text-spice-taupe">
                       {cartCount} {cartCount === 1 ? 'item' : 'items'} selected
@@ -128,8 +128,8 @@ export function CartDrawer() {
                   <span className="flex items-center gap-1.5">
                     <Truck className="w-3.5 h-3.5" />
                     {isFreeShipping
-                      ? 'You have unlocked Free Express Shipping! 🎉'
-                      : `Add ${formatCurrency(amountForFreeShipping)} more for FREE Shipping`}
+                      ? 'You have unlocked Free Express Shipping Across Rajasthan! 🎉'
+                      : `Add ${formatCurrency(amountForFreeShipping)} more for FREE Rajasthan Delivery`}
                   </span>
                   <span className="font-bold">{progressPercent}%</span>
                 </div>
@@ -151,16 +151,16 @@ export function CartDrawer() {
                       <ShoppingBag className="w-8 h-8" />
                     </div>
                     <h3 className="font-serif font-bold text-lg text-spice-espresso">
-                      Your cart is empty
+                      Your inquiry cart is empty
                     </h3>
                     <p className="text-xs text-spice-taupe mt-1 max-w-xs">
-                      Discover single-origin spices, artisanal blends, and farm-fresh harvests.
+                      Browse diagnostic analyzers, clinical reagents, microscopes, and laboratory consumables.
                     </p>
                     <button
                       onClick={closeCart}
                       className="mt-6 px-5 py-2.5 rounded-spice-button bg-spice-terracotta text-white font-medium text-xs hover:bg-spice-terracotta-600 transition-colors shadow-warm-sm"
                     >
-                      Explore Spices
+                      Browse Lab Equipment
                     </button>
                   </div>
                 ) : (

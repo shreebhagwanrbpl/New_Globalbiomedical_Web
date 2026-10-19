@@ -80,16 +80,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       try {
-        const savedCart = localStorage.getItem('aaxol_cart');
+        const savedCart = localStorage.getItem('human_bio_cart') || localStorage.getItem('aaxol_cart');
         if (savedCart) setCart(JSON.parse(savedCart));
 
-        const savedWishlist = localStorage.getItem('aaxol_wishlist');
+        const savedWishlist = localStorage.getItem('human_bio_wishlist') || localStorage.getItem('aaxol_wishlist');
         if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
-        const savedRecent = localStorage.getItem('aaxol_recently_viewed');
+        const savedRecent = localStorage.getItem('human_bio_recently_viewed') || localStorage.getItem('aaxol_recently_viewed');
         if (savedRecent) setRecentlyViewed(JSON.parse(savedRecent));
 
-        const savedCoupon = localStorage.getItem('aaxol_applied_coupon');
+        const savedCoupon = localStorage.getItem('human_bio_applied_coupon') || localStorage.getItem('aaxol_applied_coupon');
         if (savedCoupon) {
           const parsed = JSON.parse(savedCoupon);
           if (parsed.code) {
@@ -105,21 +105,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Save cart changes
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('aaxol_cart', JSON.stringify(cart));
+      localStorage.setItem('human_bio_cart', JSON.stringify(cart));
     }
   }, [cart]);
 
   // Save wishlist changes
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('aaxol_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('human_bio_wishlist', JSON.stringify(wishlist));
     }
   }, [wishlist]);
 
   // Save recently viewed changes
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('aaxol_recently_viewed', JSON.stringify(recentlyViewed));
+      localStorage.setItem('human_bio_recently_viewed', JSON.stringify(recentlyViewed));
     }
   }, [recentlyViewed]);
 
@@ -156,7 +156,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setCouponDiscount(0);
       setCouponMessage(null);
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('aaxol_applied_coupon');
+        localStorage.removeItem('human_bio_applied_coupon');
       }
       return;
     }
@@ -173,7 +173,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setCouponDiscount(discount);
       setCouponMessage(appliedCoupon === 'FREESHIP' ? 'Free express shipping coupon applied!' : validation.message);
       if (typeof window !== 'undefined') {
-        localStorage.setItem('aaxol_applied_coupon', JSON.stringify({ code: appliedCoupon, discount }));
+        localStorage.setItem('human_bio_applied_coupon', JSON.stringify({ code: appliedCoupon, discount }));
       }
     } else {
       // Subtotal dropped below min requirement or coupon became invalid
@@ -187,9 +187,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Add to cart supporting product objects or shorthand items
   const addToCart = useCallback((product: Product | any, quantity: number = 1, selectedPackSize?: string) => {
     const pId = product.id || product.productId;
-    const title = product.title || product.name || 'Artisanal Spice';
+    const title = product.title || product.name || 'Biomedical Product';
     const slug = product.slug || pId;
-    const pack = selectedPackSize || product.weight || product.selectedPackSize || '100g';
+    const pack = selectedPackSize || product.weight || product.selectedPackSize || 'Standard Unit';
     const unitPrice = product.salePrice || product.price || 199;
     const mrp = product.mrp || unitPrice;
     const image = (product.images && product.images[0]) || product.image || 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&auto=format&fit=crop&q=80';
@@ -282,8 +282,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setCouponDiscount(0);
     setCouponMessage(null);
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('aaxol_cart');
-      localStorage.removeItem('aaxol_applied_coupon');
+      localStorage.removeItem('human_bio_cart');
+      localStorage.removeItem('human_bio_applied_coupon');
     }
   }, []);
 
@@ -296,7 +296,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         return prev.filter((p) => p.id !== id);
       }
       if (typeof productOrId === 'string') {
-        return [...prev, { id, title: id, slug: id, price: 199, mrp: 249, description: '', images: [], category: 'all', brand: 'AAXOL', sku: '', stock: 10, featured: false, bestSeller: false, offerEnabled: false, weight: '100g', ingredients: [], countryOfOrigin: 'India', manufacturer: '', fssaiInformation: { licenseNumber: '' }, createdAt: '', updatedAt: '' }];
+        return [...prev, { id, title: id, slug: id, price: 1999, mrp: 2499, description: '', images: [], category: 'all', brand: 'Human Biomedical LLP', sku: '', stock: 10, featured: false, bestSeller: false, offerEnabled: false, weight: 'Standard Unit', ingredients: [], countryOfOrigin: 'India', manufacturer: 'Human Biomedical LLP', fssaiInformation: { licenseNumber: '' }, createdAt: '', updatedAt: '' }];
       }
       return [...prev, productOrId];
     });
@@ -309,7 +309,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const clearWishlist = useCallback(() => {
     setWishlist([]);
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('aaxol_wishlist');
+      localStorage.removeItem('human_bio_wishlist');
     }
   }, []);
 
@@ -330,7 +330,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setCouponDiscount(discount);
       setCouponMessage(validation.message);
       if (typeof window !== 'undefined') {
-        localStorage.setItem('aaxol_applied_coupon', JSON.stringify({ code: validation.coupon.code, discount }));
+        localStorage.setItem('human_bio_applied_coupon', JSON.stringify({ code: validation.coupon.code, discount }));
       }
     }
     return validation;
@@ -341,7 +341,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setCouponDiscount(0);
     setCouponMessage(null);
     if (typeof window !== 'undefined') {
-      localStorage.removeItem('aaxol_applied_coupon');
+      localStorage.removeItem('human_bio_applied_coupon');
     }
   }, []);
 

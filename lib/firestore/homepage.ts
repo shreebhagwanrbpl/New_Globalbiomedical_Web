@@ -13,23 +13,23 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
   trustBadges: [
     {
       icon: 'ShieldCheck',
-      title: '100% Pure & Authentic',
-      description: 'Zero artificial fillers, colors, or preservatives',
-    },
-    {
-      icon: 'Sparkles',
-      title: 'Stone Ground Fresh',
-      description: 'Slow-ground to preserve natural essential oils',
-    },
-    {
-      icon: 'Truck',
-      title: 'Direct Farm Sourced',
-      description: 'From certified spice plantations across India',
+      title: 'ISO 13485:2016 Certified',
+      description: 'Manufactured and calibrated to international medical IVD standards',
     },
     {
       icon: 'Award',
-      title: 'FSSAI Certified',
-      description: 'Rigorous 24-parameter laboratory tested purity',
+      title: 'NABL Traceable Calibration',
+      description: 'Every analyzer supplied with certified traceable QC quality report',
+    },
+    {
+      icon: 'Truck',
+      title: 'Rajasthan 50-District Delivery',
+      description: 'Guaranteed 24-48 hr dispatch from Jaipur Central Hub',
+    },
+    {
+      icon: 'Wrench',
+      title: 'On-Site Engineer Installation',
+      description: 'Professional setup, optical calibration & lab staff training included',
     },
   ],
   updatedAt: new Date().toISOString(),

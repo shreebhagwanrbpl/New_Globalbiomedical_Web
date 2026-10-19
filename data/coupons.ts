@@ -2,78 +2,63 @@ import { Coupon } from '@/types/coupon';
 
 export const staticCoupons: Coupon[] = [
   {
-    id: 'coup-spice10',
-    code: 'SPICE10',
-    description: '10% instant discount on any spice purchase',
+    id: 'coup-biomed10',
+    code: 'BIOMED10',
+    description: '10% instant discount on diagnostic reagents & consumable orders',
     type: 'percentage',
     value: 10,
-    minOrderValue: 299,
-    maxDiscountAmount: 250,
+    minOrderValue: 1999,
+    maxDiscountAmount: 2500,
     startDate: '2026-01-01T00:00:00.000Z',
     endDate: '2026-12-31T23:59:59.000Z',
-    usedCount: 1420,
+    usedCount: 520,
     isActive: true,
     createdAt: '2026-01-01T00:00:00.000Z',
-    updatedAt: '2026-09-23T00:00:00.000Z'
+    updatedAt: '2026-09-23T00:00:00.000Z',
   },
   {
-    id: 'coup-welcome15',
-    code: 'WELCOME15',
-    description: '15% off for your first spice order',
+    id: 'coup-human15',
+    code: 'HUMAN15',
+    description: '15% off for first-time diagnostic laboratory supply order',
     type: 'percentage',
     value: 15,
-    minOrderValue: 499,
-    maxDiscountAmount: 300,
+    minOrderValue: 2999,
+    maxDiscountAmount: 3000,
     startDate: '2026-01-01T00:00:00.000Z',
     endDate: '2026-12-31T23:59:59.000Z',
-    usedCount: 2890,
+    usedCount: 890,
     isActive: true,
     createdAt: '2026-01-01T00:00:00.000Z',
-    updatedAt: '2026-09-23T00:00:00.000Z'
+    updatedAt: '2026-09-23T00:00:00.000Z',
   },
   {
-    id: 'coup-festive20',
-    code: 'FESTIVE20',
-    description: '20% off on premium festive orders above ₹1,499',
-    type: 'percentage',
-    value: 20,
-    minOrderValue: 1499,
-    maxDiscountAmount: 600,
-    startDate: '2026-08-01T00:00:00.000Z',
-    endDate: '2026-11-30T23:59:59.000Z',
-    usedCount: 654,
-    isActive: true,
-    createdAt: '2026-08-01T00:00:00.000Z',
-    updatedAt: '2026-09-23T00:00:00.000Z'
-  },
-  {
-    id: 'coup-aaxol10',
-    code: 'AAXOL10',
-    description: 'Flat ₹100 discount on orders above ₹799',
+    id: 'coup-labstart',
+    code: 'LABSTART',
+    description: 'Flat ₹500 discount on pathology consumable orders above ₹4,999',
     type: 'fixed_amount',
-    value: 100,
-    minOrderValue: 799,
+    value: 500,
+    minOrderValue: 4999,
     startDate: '2026-01-01T00:00:00.000Z',
     endDate: '2026-12-31T23:59:59.000Z',
-    usedCount: 932,
+    usedCount: 340,
     isActive: true,
     createdAt: '2026-01-01T00:00:00.000Z',
-    updatedAt: '2026-09-23T00:00:00.000Z'
+    updatedAt: '2026-09-23T00:00:00.000Z',
   },
   {
     id: 'coup-freeship',
     code: 'FREESHIP',
-    description: 'Free express Pan-India shipping with zero minimum order',
+    description: 'Free express temperature-controlled shipping across all Rajasthan districts',
     type: 'free_shipping',
-    value: 79,
+    value: 150,
     minOrderValue: 0,
     startDate: '2026-01-01T00:00:00.000Z',
     endDate: '2026-12-31T23:59:59.000Z',
-    usedCount: 430,
+    usedCount: 630,
     isActive: true,
     createdAt: '2026-01-01T00:00:00.000Z',
-    updatedAt: '2026-09-23T00:00:00.000Z'
-  }
+    updatedAt: '2026-09-23T00:00:00.000Z',
+  },
 ];
 
 export interface CouponValidationResult {
@@ -85,13 +70,13 @@ export interface CouponValidationResult {
 
 export function validateCoupon(code: string, subtotal: number): CouponValidationResult {
   const normalizedCode = code.trim().toUpperCase();
-  const found = staticCoupons.find(c => c.code === normalizedCode && c.isActive);
+  const found = staticCoupons.find((c) => c.code === normalizedCode && c.isActive);
 
   if (!found) {
     return {
       isValid: false,
       discountAmount: 0,
-      message: `Coupon "${code}" is invalid or expired. Try SPICE10 or WELCOME15.`
+      message: `Coupon "${code}" is invalid or expired. Try BIOMED10 or HUMAN15.`,
     };
   }
 
@@ -99,7 +84,9 @@ export function validateCoupon(code: string, subtotal: number): CouponValidation
     return {
       isValid: false,
       discountAmount: 0,
-      message: `Coupon ${found.code} requires a minimum subtotal of ₹${found.minOrderValue}. Add ₹${found.minOrderValue - subtotal} more.`
+      message: `Coupon ${found.code} requires a minimum subtotal of ₹${found.minOrderValue}. Add ₹${
+        found.minOrderValue - subtotal
+      } more.`,
     };
   }
 
@@ -112,13 +99,13 @@ export function validateCoupon(code: string, subtotal: number): CouponValidation
   } else if (found.type === 'fixed_amount') {
     discount = Math.min(found.value, subtotal);
   } else if (found.type === 'free_shipping') {
-    discount = 79; // standard shipping fee
+    discount = 150;
   }
 
   return {
     isValid: true,
     coupon: found,
     discountAmount: discount,
-    message: `Coupon ${found.code} applied successfully! You saved ₹${discount}.`
+    message: `Coupon ${found.code} applied successfully! You saved ₹${discount}.`,
   };
 }

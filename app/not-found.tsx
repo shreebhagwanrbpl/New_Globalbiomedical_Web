@@ -14,13 +14,13 @@ export default function NotFound() {
           <Compass className="w-8 h-8 animate-spin-slow" />
         </div>
         <span className="text-xs font-semibold uppercase tracking-widest text-spice-terracotta mb-2">
-          Page Not Found
+          404 Error
         </span>
         <h1 className="text-3xl sm:text-4xl font-serif font-bold text-spice-espresso mb-4">
-          Spice Trail Lost
+          Diagnostic Page Not Found
         </h1>
         <p className="text-sm text-spice-taupe leading-relaxed mb-8">
-          The page or spice blend you are searching for might have moved, been renamed, or is temporarily unavailable in our pantry.
+          The clinical analyzer, reagent, or district portal page you are looking for may have been moved or updated.
         </p>
         <div className="flex items-center gap-3">
           <Link href="/">
@@ -30,7 +30,7 @@ export default function NotFound() {
           </Link>
           <Link href="/shop">
             <Button variant="secondary" size="md">
-              Explore Spices
+              Browse Equipment
             </Button>
           </Link>
         </div>

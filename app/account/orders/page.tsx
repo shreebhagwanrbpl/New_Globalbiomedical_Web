@@ -21,54 +21,46 @@ export default function AccountOrdersPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const saved = JSON.parse(localStorage.getItem('aaxol_demo_orders') || '[]');
+      const saved = JSON.parse(localStorage.getItem('human_bio_demo_orders') || localStorage.getItem('aaxol_demo_orders') || '[]');
       if (saved.length > 0) {
         setOrders(saved);
       } else {
         setOrders([
           {
-            orderId: 'SPC-2026-1048',
+            orderId: 'HBM-2026-1048',
             createdAt: '2026-09-21T10:30:00.000Z',
             status: 'shipped',
-            courier: 'BlueDart Express',
-            trackingNumber: 'BD-884920149',
+            courier: 'Human Biomedical Rajasthan Fleet & BlueDart Cold-Chain',
+            trackingNumber: 'HBM-RAJ-99214',
             shippingAddress: {
-              fullName: 'Aditya Birla',
-              addressLine1: '402, Royal Palms Residency, MG Road',
-              city: 'Jaipur',
+              fullName: 'Dr. Aditya Sharma (Rajasthan Diagnostic Center)',
+              addressLine1: 'Near JLN Hospital Circle, Bikaner Highway',
+              city: 'Nagaur',
               state: 'Rajasthan',
-              pincode: '302001',
+              pincode: '341001',
             },
             pricing: {
-              subtotal: 1098,
-              discount: 100,
+              subtotal: 195000,
+              discount: 10000,
               shippingFee: 0,
-              total: 998,
+              total: 185000,
             },
             items: [
               {
-                title: 'Royal Rajasthani Laal Maas Masala',
-                selectedPackSize: '150g',
-                quantity: 2,
-                unitPrice: 199,
-                totalPrice: 398,
-                image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&auto=format&fit=crop&q=80',
-              },
-              {
-                title: 'High-Curcumin Lakadong Turmeric',
-                selectedPackSize: '200g',
-                quantity: 2,
-                unitPrice: 189,
-                totalPrice: 378,
-                image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400&auto=format&fit=crop&q=80',
-              },
-              {
-                title: 'Idukki Bold Green Cardamom (8mm+)',
-                selectedPackSize: '50g',
+                title: 'HB-3000 Plus 3-Part Auto Hematology Analyzer',
+                selectedPackSize: 'Standard Analyzer Unit',
                 quantity: 1,
-                unitPrice: 349,
-                totalPrice: 349,
-                image: 'https://images.unsplash.com/photo-1599940824399-b87987ceb72a?w=400&auto=format&fit=crop&q=80',
+                unitPrice: 175000,
+                totalPrice: 175000,
+                image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&auto=format&fit=crop&q=80',
+              },
+              {
+                title: 'Universal Hematology CBC Reagent Pack (20L Diluent + Lyse)',
+                selectedPackSize: 'Complete Trio Pack',
+                quantity: 2,
+                unitPrice: 5000,
+                totalPrice: 10000,
+                image: 'https://images.unsplash.com/photo-1579165466791-788226ab77b6?w=400&auto=format&fit=crop&q=80',
               },
             ],
           },
@@ -84,14 +76,14 @@ export default function AccountOrdersPage() {
         <Container size="2xl">
           <div className="flex items-center gap-2 mb-2">
             <Link href="/account" className="text-xs font-bold text-spice-terracotta hover:underline flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" /> Back to Account
+              <ArrowLeft className="w-3.5 h-3.5" /> Back to Lab Profile
             </Link>
           </div>
           <h1 className="font-serif font-bold text-2xl sm:text-3xl lg:text-4xl text-spice-espresso">
-            Order History &amp; Live Tracking
+            Diagnostic Orders &amp; Live Tracking
           </h1>
           <p className="text-xs sm:text-sm text-spice-taupe mt-1">
-            Track your farm-fresh spice deliveries in real-time across India.
+            Track your laboratory instruments, reagents, and field engineer installation schedules across Rajasthan.
           </p>
         </Container>
       </section>
@@ -101,9 +93,9 @@ export default function AccountOrdersPage() {
           <div className="bg-white rounded-3xl border border-spice-border p-12 text-center max-w-md mx-auto">
             <Package className="w-12 h-12 text-spice-taupe mx-auto mb-3" />
             <h3 className="font-serif font-bold text-lg text-spice-espresso mb-1">No Orders Found</h3>
-            <p className="text-xs text-spice-taupe mb-5">You haven't placed any spice orders yet.</p>
+            <p className="text-xs text-spice-taupe mb-5">Your laboratory has no pending or past equipment dispatches.</p>
             <Link href="/shop">
-              <Button variant="primary" size="md">Start Shopping</Button>
+              <Button variant="primary" size="md">Browse Equipment Catalog</Button>
             </Link>
           </div>
         ) : (
@@ -127,7 +119,7 @@ export default function AccountOrdersPage() {
                   <div className="text-right">
                     <span className="text-xs text-spice-taupe block">Order Total</span>
                     <span className="font-serif font-bold text-lg text-spice-espresso">
-                      {formatCurrency(order.pricing?.total || 998)}
+                      {formatCurrency(order.pricing?.total || 185000)}
                     </span>
                   </div>
                 </div>
@@ -136,91 +128,66 @@ export default function AccountOrdersPage() {
                 <div className="py-4 border-b border-spice-border">
                   <div className="flex items-center justify-between text-xs text-spice-taupe font-semibold mb-6">
                     <span className="flex items-center gap-1.5 text-spice-espresso font-bold">
-                      <Truck className="w-4 h-4 text-spice-cardamom" /> Express Dispatch via {order.courier || 'BlueDart Express'}
+                      <Truck className="w-4 h-4 text-spice-cardamom" /> Logistics &amp; Installation: {order.courier || 'Human Biomedical Field Express'}
                     </span>
-                    <span>Tracking: <strong className="font-mono text-spice-espresso">{order.trackingNumber || 'BD-884920149'}</strong></span>
+                    <span>Waybill / Docket: <strong className="font-mono text-spice-espresso">{order.trackingNumber || 'HBM-RAJ-99214'}</strong></span>
                   </div>
 
-                  {/* 5-Step Visual Timeline */}
-                  <div className="grid grid-cols-5 gap-2 relative">
-                    <div className="absolute top-4 left-6 right-6 h-0.5 bg-spice-sand -z-0">
-                      <div className="h-full bg-spice-cardamom w-3/5" />
+                  <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                    <div className="p-3 bg-spice-cardamom-50 rounded-xl border border-spice-cardamom-200 text-spice-cardamom font-bold">
+                      ✓ Order Confirmed
                     </div>
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <div className="w-8 h-8 rounded-full bg-spice-cardamom text-white flex items-center justify-center text-xs font-bold mb-1 shadow-warm-xs">
-                        ✓
-                      </div>
-                      <span className="font-bold text-[10px] sm:text-xs text-spice-espresso block">Confirmed</span>
+                    <div className="p-3 bg-spice-cardamom-50 rounded-xl border border-spice-cardamom-200 text-spice-cardamom font-bold">
+                      ✓ QC Calibrated
                     </div>
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <div className="w-8 h-8 rounded-full bg-spice-cardamom text-white flex items-center justify-center text-xs font-bold mb-1 shadow-warm-xs">
-                        ✓
-                      </div>
-                      <span className="font-bold text-[10px] sm:text-xs text-spice-espresso block">Stone-Milled</span>
+                    <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-700 font-bold">
+                      • In Transit
                     </div>
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <div className="w-8 h-8 rounded-full bg-spice-cardamom text-white flex items-center justify-center text-xs font-bold mb-1 shadow-warm-xs animate-pulse">
-                        ✓
-                      </div>
-                      <span className="font-bold text-[10px] sm:text-xs text-spice-espresso block">In Transit</span>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <div className="w-8 h-8 rounded-full bg-spice-sand text-spice-taupe flex items-center justify-center text-xs font-bold mb-1 border border-spice-border">
-                        4
-                      </div>
-                      <span className="font-bold text-[10px] sm:text-xs text-spice-taupe block">Out for Delivery</span>
-                    </div>
-
-                    <div className="flex flex-col items-center text-center relative z-10">
-                      <div className="w-8 h-8 rounded-full bg-spice-sand text-spice-taupe flex items-center justify-center text-xs font-bold mb-1 border border-spice-border">
-                        5
-                      </div>
-                      <span className="font-bold text-[10px] sm:text-xs text-spice-taupe block">Delivered</span>
+                    <div className="p-3 bg-spice-sand/30 rounded-xl border border-spice-border text-spice-taupe font-medium">
+                      Engineer Setup
                     </div>
                   </div>
                 </div>
 
-                {/* Items in this Order */}
-                <div className="space-y-3">
-                  <h4 className="font-bold text-xs uppercase text-spice-espresso tracking-wider">
-                    Items in this Package:
+                {/* Items List */}
+                <div className="space-y-4">
+                  <h4 className="font-serif font-bold text-sm text-spice-espresso">
+                    Equipment &amp; Supplies in this Consignment:
                   </h4>
-                  <div className="divide-y divide-spice-border/60">
+                  <div className="divide-y divide-spice-border">
                     {order.items?.map((item: any, i: number) => (
-                      <div key={i} className="py-3 first:pt-0 flex items-center justify-between gap-4">
+                      <div key={i} className="py-3 flex items-center justify-between gap-4">
                         <div className="flex items-center gap-3">
                           <img
-                            src={item.image || 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=200&auto=format&fit=crop&q=80'}
+                            src={item.image}
                             alt={item.title}
-                            className="w-12 h-12 rounded-xl object-cover border border-spice-border shrink-0"
+                            className="w-14 h-14 rounded-xl object-cover border border-spice-border"
                           />
                           <div>
-                            <span className="font-bold text-xs sm:text-sm text-spice-espresso block">{item.title}</span>
-                            <span className="text-[11px] text-spice-taupe">Pack: {item.selectedPackSize || '100g'} • Qty: {item.quantity || 1}</span>
+                            <span className="font-bold text-xs text-spice-espresso block">{item.title}</span>
+                            <span className="text-[11px] text-spice-taupe">Variant: {item.selectedPackSize} • Qty: {item.quantity}</span>
                           </div>
                         </div>
-                        <span className="font-bold text-xs sm:text-sm text-spice-espresso">{formatCurrency(item.totalPrice || 199)}</span>
+                        <span className="font-bold text-xs text-spice-espresso">
+                          {formatCurrency(item.totalPrice || item.unitPrice || 0)}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Delivery Address Details */}
-                {order.shippingAddress && (
-                  <div className="pt-4 border-t border-spice-border text-xs text-spice-taupe flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-spice-sand/20 p-4 rounded-2xl">
-                    <div>
-                      <strong className="text-spice-espresso block mb-0.5">Shipping to:</strong>
-                      <span>{order.shippingAddress.fullName} • {order.shippingAddress.addressLine1}, {order.shippingAddress.city}, {order.shippingAddress.state} {order.shippingAddress.pincode}</span>
-                    </div>
-                    <span className="text-[11px] font-semibold text-spice-cardamom shrink-0">
-                      Standard Pan-India Express
-                    </span>
+                {/* Delivery Location & Field Assistance */}
+                <div className="p-4 bg-spice-sand/20 rounded-2xl border border-spice-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                  <div>
+                    <span className="font-bold text-spice-espresso block">Destination Facility:</span>
+                    <span className="text-spice-taupe">{order.shippingAddress?.fullName}, {order.shippingAddress?.addressLine1}, {order.shippingAddress?.city}, {order.shippingAddress?.state} {order.shippingAddress?.pincode}</span>
                   </div>
-                )}
+                  <Link href="/contact">
+                    <Button variant="outline" size="sm" className="shrink-0 text-xs">
+                      Contact Installation Desk
+                    </Button>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>

@@ -76,14 +76,14 @@ export default function CartPage() {
               <ShoppingBag className="w-10 h-10" />
             </div>
             <h1 className="font-serif font-bold text-2xl sm:text-3xl text-spice-espresso mb-2">
-              Your Spice Shelf is Empty
+              Your Diagnostic Cart is Empty
             </h1>
             <p className="text-sm text-spice-taupe max-w-md mx-auto mb-6">
-              Looks like you haven't added any fresh single-origin spices or artisanal masalas to your cart yet.
+              Looks like you haven't added any clinical analyzers, test kits, or diagnostic supplies to your cart yet.
             </p>
             <Link href="/shop">
               <Button variant="primary" size="lg" showArrow className="shadow-terracotta-glow">
-                Explore Fresh Spices
+                Explore Diagnostic Catalog
               </Button>
             </Link>
           </div>
@@ -100,10 +100,10 @@ export default function CartPage() {
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <div>
               <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-                SHOPPING CART
+                CLINICAL EQUIPMENT &amp; REAGENTS
               </span>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-spice-espresso tracking-tight mt-1">
-                Your Spice Selection ({cartItemCount} items)
+                Your Diagnostic Cart ({cartItemCount} items)
               </h1>
             </div>
             <Link href="/shop" className="text-xs font-bold text-spice-terracotta hover:underline">

@@ -134,10 +134,10 @@ function ShopContent() {
         }
 
         // Price Range Filter
-        if (selectedPriceRange === 'under_150' && product.price >= 150) return false;
-        if (selectedPriceRange === '150_300' && (product.price < 150 || product.price > 300)) return false;
-        if (selectedPriceRange === '300_600' && (product.price < 300 || product.price > 600)) return false;
-        if (selectedPriceRange === 'above_600' && product.price <= 600) return false;
+        if (selectedPriceRange === 'under_5000' && product.price >= 5000) return false;
+        if (selectedPriceRange === '5000_25000' && (product.price < 5000 || product.price > 25000)) return false;
+        if (selectedPriceRange === '25000_100000' && (product.price < 25000 || product.price > 100000)) return false;
+        if (selectedPriceRange === 'above_100000' && product.price <= 100000) return false;
 
         return true;
       })
@@ -170,13 +170,13 @@ function ShopContent() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="max-w-2xl">
               <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-                AUTHENTIC INDIAN SPICE PANTRY
+                CLINICAL DIAGNOSTIC EQUIPMENT &amp; REAGENTS
               </span>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-spice-espresso tracking-tight mt-1 mb-2">
-                Shop Pure Artisanal Spices &amp; Masalas
+                Shop Biomedical Equipment &amp; Diagnostic Supplies
               </h1>
               <p className="text-xs sm:text-sm text-spice-taupe leading-relaxed">
-                Explore our master collection of {staticProducts.length}+ single-origin whole seeds, cold stone-ground powders, and iron-kadai roasted masala blends.
+                Explore our comprehensive catalog of 3-Part &amp; 5-Part Hematology Analyzers, Biochemistry Systems, Microscopes, Centrifuges, and NABL Diagnostic Reagents with same-day dispatch across Rajasthan.
               </p>
             </div>
 
@@ -188,7 +188,7 @@ function ShopContent() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search spices, masalas, turmeric..."
+                  placeholder="Search Hematology, Biochemistry, Reagents..."
                   className="w-full pl-10 pr-9 py-2.5 bg-white rounded-xl border border-spice-border focus:border-spice-terracotta focus:ring-2 focus:ring-spice-terracotta/20 text-spice-espresso text-xs sm:text-sm shadow-warm-xs placeholder:text-spice-taupe/60"
                 />
                 {searchQuery && (
@@ -203,7 +203,7 @@ function ShopContent() {
             </div>
           </div>
 
-          {/* Visual Category Thumbnails Multi-line Wrap (No scrollbar) */}
+          {/* Visual Category Thumbnails Multi-line Wrap */}
           <div className="mt-5 flex flex-wrap items-center gap-2">
             <button
               onClick={() => setSelectedCategory('all')}
@@ -214,7 +214,7 @@ function ShopContent() {
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-spice-terracotta" />
-              <span>All Spices ({staticProducts.length})</span>
+              <span>All Equipment ({staticProducts.length})</span>
             </button>
 
             {staticCategories.map((cat) => (
@@ -362,9 +362,9 @@ function ShopContent() {
           ========================================================================= */}
           <aside className="hidden lg:block lg:col-span-3 sticky top-[152px] self-start select-none pb-8">
             <div className="bg-white rounded-2xl border border-spice-border shadow-warm-xs max-h-[calc(100vh-175px)] overflow-y-auto scrollbar-thin scrollbar-thumb-spice-sand scrollbar-track-transparent">
-              {/* Sticky Card Header inside Sidebar: Filter Spices */}
+              {/* Sticky Card Header inside Sidebar: Filter Equipment */}
               <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md px-5 py-3.5 border-b border-spice-border flex items-center justify-between shadow-xs">
-                <span className="font-serif font-bold text-base text-spice-espresso">Filter Spices</span>
+                <span className="font-serif font-bold text-base text-spice-espresso">Filter Equipment</span>
                 {activeFilterCount > 0 && (
                   <button
                     onClick={handleResetFilters}
@@ -376,11 +376,11 @@ function ShopContent() {
               </div>
 
               <div className="p-5 pt-3 space-y-5">
-                {/* 1. Category Filter (Sticky Header + Smooth scrolling items) */}
+                {/* 1. Category Filter */}
                 <div>
                   <div className="sticky top-[49px] z-20 bg-white/95 backdrop-blur-md py-2.5 -mx-5 px-5 border-b border-spice-border/50 mb-2.5 flex items-center justify-between">
                     <h4 className="font-bold text-xs uppercase tracking-wider text-spice-espresso">
-                      Categories ({staticCategories.length + 1})
+                      Equipment Categories ({staticCategories.length + 1})
                     </h4>
                   </div>
                   <div className="space-y-1">
@@ -392,7 +392,7 @@ function ShopContent() {
                           : 'text-spice-taupe hover:bg-spice-sand/50 hover:text-spice-espresso'
                       }`}
                     >
-                      <span>All Spices</span>
+                      <span>All Diagnostic Items</span>
                       <span>{staticProducts.length}</span>
                     </button>
                     {staticCategories.map((cat) => {
@@ -423,10 +423,10 @@ function ShopContent() {
                   <div className="space-y-1.5">
                     {[
                       { label: 'All Prices', value: 'all' },
-                      { label: 'Under ₹150', value: 'under_150' },
-                      { label: '₹150 – ₹300', value: '150_300' },
-                      { label: '₹300 – ₹600', value: '300_600' },
-                      { label: 'Above ₹600 (Gourmet & Gifts)', value: 'above_600' },
+                      { label: 'Under ₹5,000 (Consumables & Kits)', value: 'under_5000' },
+                      { label: '₹5,000 – ₹25,000 (Centrifuges & POCT)', value: '5000_25000' },
+                      { label: '₹25,000 – ₹1,00,000 (Microscopes & Semi-Auto)', value: '25000_100000' },
+                      { label: 'Above ₹1,00,000 (Automated Analyzers)', value: 'above_100000' },
                     ].map((tier) => (
                       <label key={tier.value} className="flex items-center gap-2 text-xs text-spice-espresso cursor-pointer hover:text-spice-terracotta">
                         <input
@@ -442,29 +442,7 @@ function ShopContent() {
                   </div>
                 </div>
 
-                {/* 3. Spice Heat Level */}
-                <div className="pt-4 border-t border-spice-border/70">
-                  <h4 className="font-bold text-xs uppercase tracking-wider text-spice-espresso mb-2.5">
-                    Spice Heat Level
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['all', 'Mild', 'Medium', 'Hot', 'Extra Hot'].map((lvl) => (
-                      <button
-                        key={lvl}
-                        onClick={() => setSelectedSpiceLevel(lvl)}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-semibold transition-all ${
-                          selectedSpiceLevel === lvl
-                            ? 'bg-spice-terracotta text-white shadow-warm-xs'
-                            : 'bg-spice-sand/40 text-spice-taupe hover:bg-spice-sand hover:text-spice-espresso'
-                        }`}
-                      >
-                        {lvl === 'all' ? 'Any Heat' : lvl}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 4. Special Flags (Offers, In Stock) */}
+                {/* 3. Special Flags (Offers, In Stock) */}
                 <div className="pt-4 border-t border-spice-border/70 space-y-2">
                   <label className="flex items-center gap-2 text-xs font-semibold text-spice-espresso cursor-pointer">
                     <input
@@ -473,7 +451,7 @@ function ShopContent() {
                       onChange={(e) => setOffersOnly(e.target.checked)}
                       className="rounded text-spice-terracotta focus:ring-spice-terracotta"
                     />
-                    <span>Special Discounted Offers Only</span>
+                    <span>Institutional Discount Deals</span>
                   </label>
                   <label className="flex items-center gap-2 text-xs font-semibold text-spice-espresso cursor-pointer">
                     <input
@@ -482,7 +460,7 @@ function ShopContent() {
                       onChange={(e) => setInStockOnly(e.target.checked)}
                       className="rounded text-spice-cardamom focus:ring-spice-cardamom"
                     />
-                    <span>In Stock Only</span>
+                    <span>In Stock for Immediate Dispatch</span>
                   </label>
                 </div>
 

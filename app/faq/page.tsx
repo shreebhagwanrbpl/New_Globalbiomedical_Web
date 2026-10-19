@@ -5,14 +5,15 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Button } from '@/components/common';
 import { staticFAQs, FAQItem } from '@/data/faqs';
-import { HelpCircle, ChevronDown, Sparkles, MessageSquare, ArrowRight } from 'lucide-react';
+import { HelpCircle, ChevronDown, Sparkles, MessageSquare, ArrowRight, PhoneCall } from 'lucide-react';
 import { LUXURY_EASE } from '@/components/animations/Motion';
+import { HEADQUARTERS_INFO } from '@/data/rajasthanDistricts';
 
 export default function FAQPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [openFaqId, setOpenFaqId] = useState<string | null>('faq-1');
 
-  const categories = ['All', 'Purity & Quality', 'Sourcing', 'Storage & Freshness', 'Shipping & Orders', 'Gifting & Returns'];
+  const categories = ['All', 'Equipment & Accuracy', 'Rajasthan Delivery & Hubs', 'Warranty & AMC', 'Reagents & Storage', 'Lab Setup'];
 
   const filteredFaqs = selectedCategory === 'All'
     ? staticFAQs
@@ -30,13 +31,13 @@ export default function FAQPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-spice-cardamom-50 text-spice-cardamom text-xs font-bold uppercase tracking-wider mb-4">
               <HelpCircle className="w-3.5 h-3.5" />
-              <span>FREQUENTLY ASKED QUESTIONS</span>
+              <span>DIAGNOSTIC EQUIPMENT &amp; SERVICE KNOWLEDGE BASE</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-spice-espresso tracking-tight leading-tight mb-3">
-              Everything You Need to Know
+              Frequently Asked Questions
             </h1>
             <p className="text-sm sm:text-base text-spice-taupe leading-relaxed">
-              Find detailed information on our single-origin farm sourcing, stone pounding techniques, shelf life, 24-parameter purity testing, and global shipping policies.
+              Find detailed information on NABL calibration, Rajasthan district delivery timelines, on-site biomedical engineer installation, cold-chain reagent logistics, and annual maintenance contracts (AMC/CMC).
             </p>
           </div>
         </Container>
@@ -107,22 +108,23 @@ export default function FAQPage() {
           })}
         </div>
 
-        {/* Still Have Questions Box */}
-        <div className="mt-16 max-w-2xl mx-auto bg-spice-sand/30 rounded-3xl border border-spice-border p-8 text-center">
-          <div className="w-12 h-12 rounded-full bg-spice-terracotta/10 text-spice-terracotta flex items-center justify-center mx-auto mb-3">
-            <MessageSquare className="w-6 h-6" />
+        {/* Support Banner */}
+        <div className="max-w-3xl mx-auto mt-12 p-6 sm:p-8 bg-white rounded-3xl border border-spice-border shadow-warm-xs flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="font-serif font-bold text-lg text-spice-espresso mb-1">
+              Have specific technical equipment requirements?
+            </h3>
+            <p className="text-xs text-spice-taupe">
+              Our Jaipur biomedical engineering team is available 24/7 for instrument consultations.
+            </p>
           </div>
-          <h3 className="font-serif font-bold text-xl text-spice-espresso mb-1">
-            Still Have Questions?
-          </h3>
-          <p className="text-xs sm:text-sm text-spice-taupe mb-6">
-            Our spice concierge team is available to assist you with dish pairings, bulk gifting, and delivery queries.
-          </p>
-          <Link href="/contact">
-            <Button variant="primary" size="md">
-              Contact Spice Concierge
-            </Button>
-          </Link>
+          <a
+            href="tel:+919829088234"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-spice-espresso text-white text-xs font-bold hover:bg-spice-terracotta transition-colors shrink-0 shadow-warm-xs"
+          >
+            <PhoneCall className="w-4 h-4" />
+            <span>Call +91 98290 88234</span>
+          </a>
         </div>
       </Container>
     </div>

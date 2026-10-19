@@ -11,33 +11,41 @@ import {
   Search,
   Menu,
   X,
-  Sparkles,
-  ArrowRight,
   Phone,
-  Flame,
-  Check,
+  MapPin,
+  ChevronDown,
+  ShieldCheck,
+  CheckCircle2,
+  FileText,
 } from 'lucide-react';
 import { Container } from '../common/Container';
-import { Badge } from '../common/Badge';
 import { useStore } from '@/context/StoreContext';
 import { cn } from '@/utils/cn';
-import { LUXURY_EASE } from '../animations/Motion';
+import { useDistrictLocation } from '@/hooks/useDistrictLocation';
+import { ALL_DISTRICTS, RAJASTHAN_DISTRICTS, INDIA_MAJOR_DISTRICTS, ALL_STATES_META } from '@/data/rajasthanDistricts';
 
-const SEARCH_SUGGESTIONS = [
-  { label: 'Kashmiri Mongra Saffron', category: 'Royal Exotics', href: '/product/kashmiri-saffron' },
-  { label: 'Tellicherry Malabar Black Pepper', category: 'Whole Spices', href: '/product/malabar-black-pepper' },
-  { label: 'High-Curcumin Lakadong Turmeric', category: 'Spice Powders', href: '/product/lakadong-turmeric' },
-  { label: 'Shahi Biryani Masala Blend', category: 'Blended Masalas', href: '/product/shahi-biryani-masala' },
-  { label: 'Alleppey Green Cardamom 8mm+', category: 'Whole Spices', href: '/product/alleppey-green-cardamom' },
-  { label: 'The Master Spice Vault 5-in-1', category: 'Combo Packs', href: '/offers#combos' },
+const POPULAR_SEARCHES = [
+  { label: 'HB-3000 Plus 3-Part Hematology Analyzer', category: 'Hematology', href: '/product/hb-3000-plus-3-part-hematology-analyzer' },
+  { label: 'HB-5800 5-Part Laser Hematology Analyzer', category: 'Hematology', href: '/product/hb-5800-5-part-laser-hematology-analyzer' },
+  { label: 'Universal CBC Reagents Pack (Diluent 20L + Lyse)', category: 'Reagents', href: '/product/universal-cbc-hematology-reagents-diluent-lyse-pack' },
+  { label: 'HB-ChemTouch Semi-Auto Biochemistry Analyzer', category: 'Biochemistry', href: '/product/hb-chemtouch-semi-automated-biochemistry-analyzer' },
+  { label: 'Liver Function Test (LFT) Reagents Kit', category: 'Biochemistry', href: '/product/liver-function-test-lft-liquid-stable-reagents-combo-kit' },
+  { label: 'HB-Scope 4000 Trinocular LED Microscope', category: 'Microscopes', href: '/product/hb-scope-4000-trinocular-led-laboratory-microscope' },
+  { label: 'HB-Spin 6000 Digital Clinical Centrifuge', category: 'Centrifuges', href: '/product/hb-spin-6000-digital-clinical-centrifuge-8x15ml' },
+  { label: 'Complete Pathology Lab Setup Bundle', category: 'Lab Setup', href: '/offers#combos' },
+  { label: 'Hematology Analyzers in Nagaur', category: 'Nagaur Hub', href: '/rajasthan/nagaur/hematology' },
 ];
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [districtSearch, setDistrictSearch] = useState('');
+  const [selectedStateFilter, setSelectedStateFilter] = useState<string>('all');
   const pathname = usePathname();
-  const { cartCount, wishlist, isSearchOpen, openSearch, closeSearch, toggleSearch, openCart, lastAddedItemId } = useStore();
+  const { cartCount, wishlist, isSearchOpen, closeSearch, toggleSearch, openCart } = useStore();
   const [searchQuery, setSearchQuery] = useState('');
+  const activeLocation = useDistrictLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,373 +55,504 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile drawer and search upon route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
     closeSearch();
+    setIsLocationModalOpen(false);
   }, [pathname, closeSearch]);
 
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMobileMenuOpen]);
-
   const navLinks = [
-    { label: 'Shop', href: '/shop' },
-    { label: 'Categories', href: '/category/whole-spices' },
-    {
-      label: 'Offers',
-      href: '/offers',
-      badge: 'SALE',
-      highlight: true,
-    },
-    { label: 'Combos', href: '/offers#combos' },
-    { label: 'Recipes', href: '/recipes' },
-    { label: 'Our Story', href: '/about' },
+    { label: 'About', href: '/about' },
+    { label: 'Services', href: '/services' },
+    { label: 'Products', href: '/shop' },
+    { label: '780+ Hubs', href: '/rajasthan' },
+    { label: 'Contact', href: '/contact' },
   ];
 
-  const filteredSuggestions = SEARCH_SUGGESTIONS.filter(
+  const POPULAR_STATES = [
+    { id: 'all', label: `All India (${ALL_DISTRICTS.length})` },
+    { id: 'Rajasthan', label: 'Rajasthan (50)' },
+    { id: 'Uttar Pradesh', label: 'Uttar Pradesh (75)' },
+    { id: 'Maharashtra', label: 'Maharashtra (36)' },
+    { id: 'Bihar', label: 'Bihar (38)' },
+    { id: 'Madhya Pradesh', label: 'Madhya Pradesh (55)' },
+    { id: 'Gujarat', label: 'Gujarat (33)' },
+    { id: 'Delhi NCR', label: 'Delhi NCR (11)' },
+    { id: 'Haryana', label: 'Haryana (22)' },
+    { id: 'Punjab', label: 'Punjab (23)' },
+    { id: 'West Bengal', label: 'West Bengal (23)' },
+    { id: 'Karnataka', label: 'Karnataka (31)' },
+    { id: 'Tamil Nadu', label: 'Tamil Nadu (38)' },
+    { id: 'Telangana', label: 'Telangana (33)' },
+    { id: 'Andhra Pradesh', label: 'Andhra Pradesh (26)' },
+    { id: 'Kerala', label: 'Kerala (14)' },
+    { id: 'Odisha', label: 'Odisha (30)' },
+    { id: 'Jharkhand', label: 'Jharkhand (24)' },
+    { id: 'Chhattisgarh', label: 'Chhattisgarh (33)' },
+    { id: 'Assam', label: 'Assam (31)' },
+    { id: 'Uttarakhand', label: 'Uttarakhand (13)' },
+  ];
+
+  // Filter districts in modal across all 780+ Indian districts
+  const filteredDistricts = ALL_DISTRICTS.filter((dist) => {
+    if (selectedStateFilter !== 'all') {
+      if (selectedStateFilter === 'rajasthan' && dist.state && dist.state !== 'Rajasthan') return false;
+      if (selectedStateFilter === 'india' && (!dist.state || dist.state === 'Rajasthan')) return false;
+      if (
+        selectedStateFilter !== 'rajasthan' &&
+        selectedStateFilter !== 'india' &&
+        dist.state &&
+        !dist.state.toLowerCase().includes(selectedStateFilter.toLowerCase())
+      ) {
+        return false;
+      }
+    }
+    if (!districtSearch.trim()) return true;
+    const q = districtSearch.toLowerCase().trim();
+    return (
+      dist.name.toLowerCase().includes(q) ||
+      dist.pincode.includes(q) ||
+      (dist.state && dist.state.toLowerCase().includes(q)) ||
+      dist.hindiName.includes(q)
+    );
+  }).slice(0, 60);
+
+  const dynamicStateMatches = searchQuery.trim().length >= 2
+    ? Object.entries(ALL_STATES_META)
+        .filter(([k, v]) =>
+          k.includes(searchQuery.toLowerCase().trim()) ||
+          v.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+          v.hindiName.includes(searchQuery.trim())
+        )
+        .slice(0, 3)
+        .map(([k, v]) => ({
+          label: `${v.name} State Diagnostic Supply Hub (${v.zone})`,
+          category: 'State Portal',
+          href: `/${k}`,
+        }))
+    : [];
+
+  const dynamicDistrictMatches = searchQuery.trim().length >= 2
+    ? ALL_DISTRICTS.filter((d) =>
+        d.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        d.pincode.includes(searchQuery.trim()) ||
+        (d.state && d.state.toLowerCase().includes(searchQuery.toLowerCase().trim())) ||
+        d.hindiName.includes(searchQuery.trim())
+      )
+        .slice(0, 5)
+        .map((d) => ({
+          label: `${d.name} (${d.hindiName}) - Diagnostic Hub`,
+          category: d.state || 'District Hub',
+          href: `/${d.slug}`,
+        }))
+    : [];
+
+  const productMatches = POPULAR_SEARCHES.filter(
     (item) =>
       item.label.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.category.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const filteredSuggestions = [
+    ...dynamicStateMatches,
+    ...dynamicDistrictMatches,
+    ...productMatches,
+  ].slice(0, 8);
+
   return (
     <>
-      <motion.header
-        initial={false}
-        animate={{
-          paddingTop: isScrolled ? '10px' : '16px',
-          paddingBottom: isScrolled ? '10px' : '16px',
-          backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.96)' : 'rgba(251, 248, 243, 0.92)',
-          boxShadow: isScrolled ? '0 2px 8px -2px rgba(59, 42, 36, 0.08)' : 'none',
-        }}
-        transition={{ duration: 0.25, ease: 'easeOut' }}
-        className="sticky top-0 z-40 w-full backdrop-blur-md border-b border-spice-border/80"
+      <header
+        className={cn(
+          'sticky top-0 z-50 w-full transition-all duration-200 border-b bg-white',
+          isScrolled
+            ? 'shadow-md border-slate-200 py-2.5'
+            : 'border-slate-200 py-3.5'
+        )}
+        style={{ backgroundColor: '#ffffff', opacity: 1 }}
       >
         <Container size="2xl">
-          <div className="flex items-center justify-between">
-            {/* Mobile Menu Trigger & Logo */}
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Left: Mobile trigger & Big Prominent Brand Logo */}
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0">
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
-                aria-label="Open navigation menu"
-                className="md:hidden p-2 rounded-lg text-spice-espresso hover:bg-spice-sand/60 transition-colors"
+                aria-label="Open mobile navigation menu"
+                className="lg:hidden p-2 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
               >
-                <Menu className="w-5 h-5" />
+                <Menu className="w-6 h-6" />
               </button>
 
-              {/* Brand Logo */}
-              <Link href="/" className="flex items-center gap-2.5 group">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 rounded-xl bg-gradient-to-br from-spice-terracotta to-spice-terracotta-600 flex items-center justify-center text-white font-serif font-bold text-lg shadow-warm-xs"
-                >
-                  A
-                </motion.div>
+              {/* Large, Beautiful Human Biomedical Logo */}
+              <Link
+                href="/"
+                className="flex items-center gap-2.5 group shrink-0 cursor-pointer"
+                title="Human Biomedical - Go to Homepage"
+              >
+                <img
+                  src="/images/human-biomedical-logo.png"
+                  alt="Human Biomedical LLP Logo"
+                  className="h-10 sm:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
+                />
                 <div className="flex flex-col">
                   <div className="flex items-center gap-1.5">
-                    <span className="font-serif font-bold text-xl tracking-tight text-spice-espresso leading-none">
-                      AAXOL
+                    <span className="font-extrabold text-base sm:text-lg lg:text-xl text-slate-900 tracking-tight leading-none">
+                      Human Biomedical
                     </span>
-                    <span className="text-[9px] font-sans font-bold uppercase tracking-wider text-spice-cardamom bg-spice-cardamom-50 px-1.5 py-0.5 rounded border border-spice-cardamom/25">
-                      by Organium
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-1 py-0.2 rounded border border-red-200">
+                      LLP
                     </span>
                   </div>
-                  <span className="text-[9px] uppercase tracking-widest text-spice-taupe font-semibold mt-0.5">
-                    Pure Artisanal Spices
+                  <span className="text-[9px] font-semibold tracking-wider text-slate-500 uppercase mt-0.5 hidden 2xl:block">
+                    Clinical Diagnostic Equipment
                   </span>
                 </div>
               </Link>
+
+              {/* Location Switcher Pill - visible on very wide screens */}
+              <button
+                type="button"
+                onClick={() => setIsLocationModalOpen(true)}
+                className="hidden 2xl:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-800 transition-colors ml-1 shadow-xs whitespace-nowrap"
+                title="Select District or State Hub"
+              >
+                <MapPin className="w-3.5 h-3.5 text-red-600 shrink-0" />
+                <span className="truncate max-w-[130px]">
+                  {activeLocation.isDistrictActive
+                    ? `${activeLocation.district?.name} Hub`
+                    : '780+ Hubs'}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+              </button>
             </div>
 
-            {/* Desktop Navigation Links */}
-            <nav className="hidden md:flex items-center gap-7 lg:gap-8 text-sm font-medium text-spice-espresso">
+            {/* Center: Clean Desktop Navigation Menu */}
+            <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-semibold text-slate-700 whitespace-nowrap">
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isActive =
+                  pathname === link.href ||
+                  (link.href === '/shop' &&
+                    (pathname?.startsWith('/shop') ||
+                      pathname?.startsWith('/category') ||
+                      pathname?.startsWith('/product'))) ||
+                  (link.href === '/services' && pathname?.startsWith('/services')) ||
+                  (link.href === '/rajasthan' && pathname?.startsWith('/rajasthan'));
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      'relative py-1 transition-colors hover:text-spice-terracotta flex items-center gap-1.5',
-                      isActive ? 'text-spice-terracotta font-semibold' : 'text-spice-espresso',
-                      link.highlight && 'text-spice-terracotta font-semibold'
+                      'relative py-1 transition-colors hover:text-red-600',
+                      isActive ? 'text-red-600 font-bold' : 'text-slate-700'
                     )}
                   >
                     <span>{link.label}</span>
-                    {link.badge && (
-                      <Badge variant="offer" size="sm">
-                        {link.badge}
-                      </Badge>
-                    )}
                     {isActive && (
-                      <motion.span
-                        layoutId="activeNavIndicator"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-spice-terracotta rounded-full"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
+                      <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600 rounded-full" />
                     )}
                   </Link>
                 );
               })}
             </nav>
 
-            {/* Right Action Icons */}
-            <div className="flex items-center gap-1.5 sm:gap-2 text-spice-espresso">
-              {/* Search Toggle Button */}
-              <motion.button
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
+            {/* Right: Actions, Search, Cart & Quote CTA */}
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+              {/* Search Toggle */}
+              <button
                 type="button"
                 onClick={toggleSearch}
-                aria-label="Search spices"
-                className={cn(
-                  'p-2 sm:p-2.5 rounded-full transition-colors',
-                  isSearchOpen
-                    ? 'bg-spice-peach text-spice-terracotta'
-                    : 'text-spice-espresso hover:text-spice-terracotta hover:bg-spice-sand/50'
-                )}
+                aria-label="Search analyzers and reagents"
+                className="p-2 rounded-full text-slate-700 hover:text-red-600 hover:bg-slate-100 transition-colors"
+                title="Search"
               >
-                <Search className="w-5 h-5" />
-              </motion.button>
+                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
 
-              {/* Account Link */}
-              <Link
-                href="/account"
-                aria-label="My Account"
-                className="p-2 sm:p-2.5 rounded-full text-spice-espresso hover:text-spice-terracotta hover:bg-spice-sand/50 transition-colors hidden sm:inline-flex"
-              >
-                <User className="w-5 h-5" />
-              </Link>
-
-              {/* Wishlist Icon with Live Count */}
+              {/* Wishlist */}
               <Link
                 href="/wishlist"
-                aria-label="Wishlist"
-                className="p-2 sm:p-2.5 rounded-full text-spice-espresso hover:text-spice-terracotta hover:bg-spice-sand/50 transition-colors relative hidden sm:inline-flex items-center justify-center"
+                aria-label="Saved Equipment"
+                className="p-2 rounded-full text-slate-700 hover:text-red-600 hover:bg-slate-100 transition-colors relative hidden sm:inline-flex"
+                title="Saved Items"
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                 {wishlist.length > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-0.5 rounded-full bg-spice-turmeric text-white text-[9px] font-bold flex items-center justify-center leading-none shadow-xs border border-white"
-                  >
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center leading-none">
                     {wishlist.length}
-                  </motion.span>
+                  </span>
                 )}
               </Link>
 
-              {/* Cart Button with Animated Bounce Trigger */}
-              <motion.button
+              {/* Inquiry Cart Icon Button */}
+              <button
                 type="button"
                 onClick={openCart}
-                animate={lastAddedItemId ? { scale: [1, 1.12, 1] } : {}}
-                transition={{ duration: 0.35 }}
-                aria-label="Open shopping cart"
-                className="flex items-center gap-2 bg-spice-sand/60 hover:bg-spice-sand text-spice-espresso px-3.5 py-2 rounded-xl font-medium text-xs sm:text-sm transition-all border border-spice-border shadow-warm-xs hover:border-spice-terracotta/30 ml-1 group shrink-0"
+                aria-label="Inquiry Cart"
+                className="relative p-2 rounded-full text-slate-700 hover:text-red-600 hover:bg-slate-100 transition-colors"
+                title="Inquiry Cart"
               >
-                <div className="relative flex items-center justify-center shrink-0">
-                  <ShoppingBag className="w-5 h-5 text-spice-terracotta transition-transform group-hover:scale-110" />
-                  {cartCount > 0 && (
-                    <motion.span
-                      key={cartCount}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                      className="absolute -top-2 -right-2.5 min-w-[18px] h-[18px] px-1 rounded-full bg-spice-terracotta text-white text-[10px] font-bold flex items-center justify-center leading-none shadow-xs border-2 border-white"
-                    >
-                      {cartCount}
-                    </motion.span>
-                  )}
-                </div>
-                <span className="hidden sm:inline font-semibold">Cart</span>
-              </motion.button>
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 rounded-full bg-red-600 text-white text-[9px] font-bold flex items-center justify-center leading-none">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
+              {/* Primary Quote CTA Button */}
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold shadow-xs transition-all hover:shadow-sm whitespace-nowrap"
+              >
+                <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <span>Get Quote</span>
+              </Link>
             </div>
           </div>
-
-          {/* Quick Search Dropdown Bar */}
-          <AnimatePresence>
-            {isSearchOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25, ease: LUXURY_EASE }}
-                className="overflow-hidden"
-              >
-                <div className="mt-3 pt-3 pb-3 border-t border-spice-border">
-                  <div className="relative max-w-xl mx-auto">
-                    <Search className="absolute left-3.5 top-3.5 w-4.5 h-4.5 text-spice-taupe" />
-                    <input
-                      type="text"
-                      placeholder="Search whole spices, ground masalas, saffron, turmeric..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      autoFocus
-                      className="w-full pl-10 pr-10 py-2.5 rounded-spice-input bg-spice-white border border-spice-border text-sm text-spice-espresso placeholder:text-spice-taupe/70 focus:outline-none focus:ring-2 focus:ring-spice-terracotta/20 focus:border-spice-terracotta shadow-warm-sm"
-                    />
-                    <button
-                      type="button"
-                      onClick={closeSearch}
-                      className="absolute right-3 top-3 text-spice-taupe hover:text-spice-espresso text-xs p-1"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-
-                    {/* Instant Search Suggestions */}
-                    <div className="mt-2 bg-spice-white rounded-spice-card border border-spice-border shadow-warm-md p-2 space-y-1">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-spice-taupe px-3 py-1 block">
-                        Popular Spices & Harvests
-                      </span>
-                      {filteredSuggestions.map((item, idx) => (
-                        <Link
-                          key={idx}
-                          href={item.href}
-                          onClick={closeSearch}
-                          className="flex items-center justify-between px-3 py-2 rounded-lg text-xs text-spice-espresso hover:bg-spice-sand/50 hover:text-spice-terracotta transition-colors group"
-                        >
-                          <span className="font-medium">{item.label}</span>
-                          <span className="text-[10px] text-spice-taupe bg-spice-ivory px-2 py-0.5 rounded border border-spice-border/60">
-                            {item.category}
-                          </span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </Container>
-      </motion.header>
+      </header>
 
-      {/* Mobile Slide-Over Menu */}
+      {/* =========================================================================
+          DISTRICT / LOCATION SELECTION MODAL
+      ========================================================================= */}
+      <AnimatePresence>
+        {isLocationModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl p-6 overflow-hidden flex flex-col max-h-[85vh]"
+            >
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div>
+                  <h3 className="font-extrabold text-xl text-slate-900">
+                    Select Your Service District / Hub
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Covering all 50 districts of Rajasthan &amp; major healthcare hubs across India
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsLocationModalOpen(false)}
+                  className="p-2 rounded-full text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Search & State Filter Tabs */}
+              <div className="py-4 space-y-3">
+                <div className="relative">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={districtSearch}
+                    onChange={(e) => setDistrictSearch(e.target.value)}
+                    placeholder="Search district, city or PIN (e.g. Nagaur, Jaipur, Delhi, Ahmedabad, Lucknow...)"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600"
+                  />
+                </div>
+
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
+                  {POPULAR_STATES.map((st) => (
+                    <button
+                      key={st.id}
+                      onClick={() => {
+                        setSelectedStateFilter(st.id);
+                        setDistrictSearch('');
+                      }}
+                      className={cn(
+                        'px-3 py-1.5 rounded-lg font-bold shrink-0 transition-all text-xs',
+                        selectedStateFilter === st.id
+                          ? 'bg-slate-900 text-white shadow-xs'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      )}
+                    >
+                      {st.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Districts Grid */}
+              <div className="flex-1 overflow-y-auto pr-1 grid grid-cols-1 sm:grid-cols-2 gap-2 pb-2">
+                <Link
+                  href="/"
+                  onClick={() => setIsLocationModalOpen(false)}
+                  className="p-3 rounded-2xl border border-slate-200 hover:border-red-500 hover:bg-red-50/40 transition-colors flex items-start gap-2.5"
+                >
+                  <MapPin className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="font-bold text-sm text-slate-900 block">Jaipur Central Headquarters</span>
+                    <span className="text-[11px] text-slate-500">200 Feet Bypass Road, Tagor Nagar (State Dispatch Hub)</span>
+                  </div>
+                </Link>
+
+                {filteredDistricts.map((dist) => (
+                  <Link
+                    key={dist.slug}
+                    href={`/${dist.slug}`}
+                    onClick={() => setIsLocationModalOpen(false)}
+                    className={cn(
+                      'p-3 rounded-2xl border transition-colors flex items-start gap-2.5',
+                      activeLocation.district?.slug === dist.slug
+                        ? 'border-red-600 bg-red-50/60 font-bold'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                    )}
+                  >
+                    <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="font-bold text-sm text-slate-900 truncate">{dist.name}</span>
+                        <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded">
+                          {dist.state || 'Rajasthan'}
+                        </span>
+                      </div>
+                      <span className="text-[11px] text-slate-500 truncate block">
+                        PIN: {dist.pincode} • {dist.landmark.slice(0, 38)}...
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* =========================================================================
+          SEARCH OVERLAY
+      ========================================================================= */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-slate-900/60 backdrop-blur-xs">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="w-full max-w-2xl bg-white rounded-3xl border border-slate-200 shadow-2xl p-6"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <span className="font-bold text-sm text-slate-900">Search Diagnostic Instruments &amp; Reagents</span>
+                <button
+                  onClick={closeSearch}
+                  className="p-1 rounded-full text-slate-400 hover:text-slate-700"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="relative mt-4">
+                <Search className="w-5 h-5 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  autoFocus
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search CBC Analyzers, Biochemistry Reagents, Microscopes..."
+                  className="w-full pl-12 pr-4 py-3 rounded-2xl border border-slate-200 text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600"
+                />
+              </div>
+
+              <div className="mt-4 max-h-72 overflow-y-auto space-y-1 divide-y divide-slate-100">
+                {filteredSuggestions.map((item, idx) => (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    onClick={closeSearch}
+                    className="flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 transition-colors text-xs sm:text-sm text-slate-800"
+                  >
+                    <span className="font-medium">{item.label}</span>
+                    <span className="text-[11px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+                      {item.category}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* =========================================================================
+          MOBILE DRAWER
+      ========================================================================= */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="fixed inset-0 bg-spice-espresso/50 backdrop-blur-sm"
+          <div className="fixed inset-0 z-50 flex lg:hidden">
+            <div
               onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs"
             />
-
-            {/* Mobile Drawer */}
             <motion.div
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ duration: 0.32, ease: LUXURY_EASE }}
-              className="fixed inset-y-0 left-0 w-4/5 max-w-xs bg-spice-ivory shadow-warm-xl border-r border-spice-border p-6 flex flex-col justify-between z-10 overflow-y-auto"
+              transition={{ duration: 0.25 }}
+              className="relative w-4/5 max-w-sm bg-white h-full shadow-2xl p-6 flex flex-col justify-between overflow-y-auto z-10"
             >
               <div>
-                {/* Header */}
-                <div className="flex items-center justify-between pb-5 border-b border-spice-border">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-spice-terracotta to-spice-terracotta-600 flex items-center justify-center text-white font-serif font-bold text-sm shadow-warm-xs">
-                      A
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-serif font-bold text-base text-spice-espresso leading-none">
-                        AAXOL
-                      </span>
-                      <span className="text-[8px] font-sans font-bold uppercase tracking-wider text-spice-cardamom">
-                        by Organium
-                      </span>
-                    </div>
-                  </div>
+                <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                  <Link
+                    href="/"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-2 cursor-pointer"
+                    title="Human Biomedical - Go to Homepage"
+                  >
+                    <img
+                      src="/images/human-biomedical-logo.png"
+                      alt="Human Biomedical Logo"
+                      className="h-10 w-auto"
+                    />
+                    <span className="font-extrabold text-base text-slate-900">Human Biomedical</span>
+                  </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    aria-label="Close menu"
-                    className="p-1 rounded-full text-spice-taupe hover:text-spice-espresso hover:bg-spice-sand"
+                    className="p-1 rounded-full text-slate-400 hover:text-slate-700"
                   >
                     <X className="w-5 h-5" />
                   </button>
                 </div>
 
-                {/* Staggered Navigation Links */}
-                <motion.div
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                      opacity: 1,
-                      transition: { staggerChildren: 0.05, delayChildren: 0.1 },
-                    },
-                  }}
-                  className="py-4 space-y-1"
-                >
+                <nav className="space-y-2">
                   {navLinks.map((link) => (
-                    <motion.div
+                    <Link
                       key={link.href}
-                      variants={{
-                        hidden: { opacity: 0, x: -12 },
-                        visible: { opacity: 1, x: 0 },
-                      }}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block p-3 rounded-xl font-bold text-slate-800 hover:bg-slate-50 hover:text-red-600 transition-colors"
                     >
-                      <Link
-                        href={link.href}
-                        className="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium text-spice-espresso hover:bg-spice-sand/60 hover:text-spice-terracotta transition-colors"
-                      >
-                        <span>{link.label}</span>
-                        {link.badge ? (
-                          <Badge variant="offer" size="sm">
-                            {link.badge}
-                          </Badge>
-                        ) : (
-                          <ArrowRight className="w-3.5 h-3.5 text-spice-taupe/60" />
-                        )}
-                      </Link>
-                    </motion.div>
+                      {link.label}
+                    </Link>
                   ))}
-                </motion.div>
+                </nav>
 
-                {/* Quick Customer Links */}
-                <div className="pt-4 border-t border-spice-border space-y-1">
-                  <Link
-                    href="/account"
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-spice-espresso hover:bg-spice-sand/60 hover:text-spice-terracotta transition-colors"
+                <div className="mt-6 pt-6 border-t border-slate-100 space-y-3">
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      setIsLocationModalOpen(true);
+                    }}
+                    className="w-full flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-800"
                   >
-                    <User className="w-4 h-4 text-spice-terracotta" />
-                    <span>My Account</span>
-                  </Link>
-                  <Link
-                    href="/wishlist"
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-spice-espresso hover:bg-spice-sand/60 hover:text-spice-terracotta transition-colors"
-                  >
-                    <Heart className="w-4 h-4 text-spice-terracotta" />
-                    <span>Saved Wishlist ({wishlist.length})</span>
-                  </Link>
+                    <span className="flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-red-600" />
+                      <span>{activeLocation.isDistrictActive ? `${activeLocation.district?.name} Hub` : 'Select District Hub'}</span>
+                    </span>
+                    <span className="text-red-600">Change →</span>
+                  </button>
                 </div>
               </div>
 
-              {/* Bottom Support Badge */}
-              <div className="pt-4 border-t border-spice-border">
-                <div className="p-3.5 rounded-spice-card bg-spice-white border border-spice-border text-xs shadow-warm-xs">
-                  <div className="flex items-center gap-2 text-spice-espresso font-semibold mb-1">
-                    <Phone className="w-3.5 h-3.5 text-spice-terracotta" />
-                    <span>Customer Support</span>
-                  </div>
-                  <p className="text-spice-taupe text-[11px] leading-relaxed">
-                    Mon - Sat, 9am - 7pm IST
-                  </p>
-                  <p className="font-semibold text-spice-espresso mt-1">+91 98765 43210</p>
-                </div>
+              <div className="pt-6 border-t border-slate-100">
+                <a
+                  href="tel:+919829088234"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-red-600 text-white font-bold text-sm shadow-sm"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Call +91 98290 88234</span>
+                </a>
               </div>
             </motion.div>
           </div>

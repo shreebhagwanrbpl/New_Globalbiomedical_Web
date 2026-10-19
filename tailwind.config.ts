@@ -10,71 +10,82 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Modern Clinical & Biomedical Design System
+        medical: {
+          crimson: '#DC2626',
+          darkred: '#B91C1C',
+          sapphire: '#0284C7',
+          navy: '#0F172A',
+          slate: '#1E293B',
+          frost: '#F8FAFC',
+          border: '#E2E8F0',
+          muted: '#64748B',
+        },
+        // Backward-compatible token mappings to prevent breakage in existing components
         spice: {
-          // 🤍 Royal Warm Ivory — Base light page & section background
+          // 🤍 Clean Clinical White / Ice background
           ivory: {
-            DEFAULT: '#FBF8F3',
+            DEFAULT: '#FFFFFF',
             50: '#FFFFFF',
-            100: '#FBF8F3',
-            200: '#F7EFE3',
-            300: '#EFE3D0',
+            100: '#F8FAFC',
+            200: '#F1F5F9',
+            300: '#E2E8F0',
           },
-          lightcream: '#FBF8F3',
-          
-          // 🧱 Rich Terracotta Crimson — Primary CTA, highlights, prices
+          lightcream: '#F8FAFC',
+
+          // 🔴 Brand Crimson Red (Matches "HR Human Biomedicals" logo)
           terracotta: {
-            DEFAULT: '#B93826',
-            50: '#FEF3F2',
-            100: '#F8E6DA', // Soft Peach Cream tint
-            200: '#F3C7BE',
-            300: '#E99789',
-            400: '#DC6855',
-            500: '#B93826',
-            600: '#A22F1E',
-            700: '#872618',
-            800: '#6E1F14',
-            900: '#4F160E',
+            DEFAULT: '#DC2626',
+            50: '#FEF2F2',
+            100: '#FEE2E2',
+            200: '#FECACA',
+            300: '#FCA5A5',
+            400: '#F87171',
+            500: '#DC2626',
+            600: '#B91C1C',
+            700: '#991B1B',
+            800: '#7F1D1D',
+            900: '#450A0A',
           },
-          // Backward-compatible alias for primary red -> terracotta
           red: {
-            DEFAULT: '#B93826',
-            50: '#FEF3F2',
-            100: '#F8E6DA',
-            200: '#F3C7BE',
-            300: '#E99789',
-            400: '#DC6855',
-            500: '#B93826',
-            600: '#A22F1E',
-            700: '#872618',
-            800: '#6E1F14',
-            900: '#4F160E',
+            DEFAULT: '#DC2626',
+            50: '#FEF2F2',
+            100: '#FEE2E2',
+            200: '#FECACA',
+            300: '#FCA5A5',
+            400: '#F87171',
+            500: '#DC2626',
+            600: '#B91C1C',
+            700: '#991B1B',
+            800: '#7F1D1D',
+            900: '#450A0A',
           },
           deepred: {
-            DEFAULT: '#872618',
-            light: '#A22F1E',
-            dark: '#6E1F14',
+            DEFAULT: '#B91C1C',
+            light: '#DC2626',
+            dark: '#991B1B',
           },
           burgundy: {
-            DEFAULT: '#6E1F14',
-            light: '#872618',
-            dark: '#4F160E',
+            DEFAULT: '#991B1B',
+            light: '#B91C1C',
+            dark: '#7F1D1D',
           },
 
-          // 🟡 Turmeric Gold — Best seller, stars, warm accents
+          // 🟡 Clinical Amber / Gold for Ratings & Accents
           turmeric: {
-            DEFAULT: '#D97706',
-            50: '#FEFCE8',
-            100: '#FEF9C3',
-            200: '#FEF08A',
-            300: '#FDE047',
-            400: '#F59E0B',
-            500: '#D97706',
-            600: '#B45309',
-            700: '#92400E',
-            800: '#78350F',
+            DEFAULT: '#F59E0B',
+            50: '#FFFBEB',
+            100: '#FEF3C7',
+            200: '#FDE68A',
+            300: '#FCD34D',
+            400: '#FBBF24',
+            500: '#F59E0B',
+            600: '#D97706',
+            700: '#B45309',
+            800: '#92400E',
           },
           orange: {
-            DEFAULT: '#D97706',
+            DEFAULT: '#F59E0B',
             50: '#FFFBEB',
             100: '#FEF3C7',
             200: '#FDE68A',
@@ -85,121 +96,122 @@ const config: Config = {
             700: '#B45309',
           },
 
-          // 🌿 Cardamom Green — Announcement bar, organic purity, light green footer & accents
+          // 🔵 Clinical Sky / Sapphire Blue for diagnostic trust, verified badges
           cardamom: {
-            DEFAULT: '#2D6A4F',
-            50: '#F2F8F4', // Fresh light green tint
-            100: '#EFF6F2', // Soft light green footer background
-            200: '#D4E8DC', // Delicate light green border
-            300: '#95D5B2',
-            400: '#52B788',
-            500: '#40916C',
-            600: '#2D6A4F',
-            700: '#1B4332',
-            800: '#081C15',
+            DEFAULT: '#0284C7',
+            50: '#F0F9FF',
+            100: '#E0F2FE',
+            200: '#BAE6FD',
+            300: '#7DD3FC',
+            400: '#38BDF8',
+            500: '#0EA5E9',
+            600: '#0284C7',
+            700: '#0369A1',
+            800: '#075985',
+            900: '#0C4A6E',
           },
           lightgreen: {
-            DEFAULT: '#EFF6F2',
-            light: '#F5FAF7',
-            border: '#D4E8DC',
+            DEFAULT: '#F0FDF4',
+            light: '#DCFCE7',
+            border: '#BBF7D0',
           },
           green: {
-            DEFAULT: '#2D6A4F',
-            50: '#F2F8F4',
-            100: '#EFF6F2',
-            200: '#D4E8DC',
-            300: '#95D5B2',
-            400: '#52B788',
-            500: '#40916C',
-            600: '#2D6A4F',
-            700: '#1B4332',
-            800: '#081C15',
+            DEFAULT: '#16A34A',
+            50: '#F0FDF4',
+            100: '#DCFCE7',
+            200: '#BBF7D0',
+            300: '#86EFAC',
+            400: '#4ADE80',
+            500: '#22C55E',
+            600: '#16A34A',
+            700: '#15803D',
+            800: '#166534',
           },
 
-          // 🤎 Espresso Brown — Dark text, icons, headings (NO pure black)
+          // 🏢 Deep Clinical Navy / Slate — Modern, crisp, authoritative text
           espresso: {
-            DEFAULT: '#3B2A24',
-            light: '#4D3830',
-            dark: '#2B1D19',
+            DEFAULT: '#0F172A', // Slate 900
+            light: '#1E293B',   // Slate 800
+            dark: '#020617',    // Slate 950
           },
           coffee: {
-            DEFAULT: '#3B2A24',
-            light: '#4D3830',
-            dark: '#2B1D19',
+            DEFAULT: '#0F172A',
+            light: '#1E293B',
+            dark: '#020617',
           },
           cocoa: {
-            DEFAULT: '#3B2A24',
-            light: '#4D3830',
-            dark: '#2B1D19',
+            DEFAULT: '#0F172A',
+            light: '#1E293B',
+            dark: '#020617',
           },
 
-          // 🟤 Warm Sand — Secondary section & card bg
+          // ❄️ Soft Slate / Frost for cards and secondary sections
           sand: {
-            DEFAULT: '#F3EBDD',
-            50: '#FAF6F0',
-            100: '#F3EBDD',
-            200: '#EADBC6',
-            300: '#DFC8AB',
+            DEFAULT: '#F1F5F9',
+            50: '#F8FAFC',
+            100: '#F1F5F9',
+            200: '#E2E8F0',
+            300: '#CBD5E1',
           },
           cream: {
-            DEFAULT: '#F3EBDD',
-            50: '#FBF8F3',
-            100: '#F8E6DA', // Soft Peach Cream
-            200: '#F3EBDD',
-            300: '#EADBC6',
+            DEFAULT: '#F8FAFC',
+            50: '#FFFFFF',
+            100: '#FEF2F2',
+            200: '#F1F5F9',
+            300: '#E2E8F0',
           },
           beige: {
-            DEFAULT: '#F3EBDD',
-            50: '#FAF6F0',
-            100: '#F3EBDD',
-            200: '#EADBC6',
-            300: '#DFC8AB',
+            DEFAULT: '#F8FAFC',
+            50: '#FFFFFF',
+            100: '#F1F5F9',
+            200: '#E2E8F0',
+            300: '#CBD5E1',
           },
 
-          // 🌸 Soft Peach Cream — Promo strips, badges, discount chips
+          // 🌸 Soft Red Tint for alert badges and highlights
           peach: {
-            DEFAULT: '#F8E6DA',
-            50: '#FFF5F0',
-            100: '#F8E6DA',
-            200: '#F2D2C0',
+            DEFAULT: '#FEF2F2',
+            50: '#FFF5F5',
+            100: '#FEE2E2',
+            200: '#FECACA',
           },
 
           // ⚪ Pure White
           white: '#FFFFFF',
 
-          // 🩶 Warm Taupe — Muted text, subtitles, strikethrough price
-          taupe: '#75665E',
-          muted: '#75665E',
+          // 🩶 Clean Professional Slate — Secondary text, descriptions
+          taupe: '#475569', // Slate 600
+          muted: '#64748B', // Slate 500
 
-          // 🟫 Soft Beige Border — Dividers, inputs, subtle card borders
-          border: '#E7D9C8',
+          // 🔲 Clean Slate Border
+          border: '#E2E8F0',
 
           // Functional tokens
-          success: '#2D6A4F',
-          error: '#B93826',
-          warning: '#D97706',
+          success: '#16A34A',
+          error: '#DC2626',
+          warning: '#F59E0B',
         },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['var(--font-serif)', 'Georgia', 'serif'],
-        display: ['var(--font-serif)', 'Georgia', 'serif'],
+        serif: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'], // Maps serif to sleek modern sans-serif
+        display: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
       },
       borderRadius: {
-        'spice-input': '10px',
-        'spice-button': '12px',
-        'spice-card': '18px',
-        'spice-section': '24px',
+        'spice-input': '8px',
+        'spice-button': '10px',
+        'spice-card': '16px',
+        'spice-section': '20px',
       },
       boxShadow: {
-        'warm-xs': '0 1px 2px 0 rgba(59, 42, 36, 0.04)',
-        'warm-sm': '0 2px 4px 0 rgba(59, 42, 36, 0.05), 0 1px 2px 0 rgba(59, 42, 36, 0.03)',
-        'warm-md': '0 4px 8px -1px rgba(59, 42, 36, 0.07), 0 2px 4px -2px rgba(59, 42, 36, 0.03)',
-        'warm-lg': '0 12px 20px -3px rgba(59, 42, 36, 0.08), 0 4px 6px -4px rgba(59, 42, 36, 0.02)',
-        'warm-xl': '0 20px 25px -5px rgba(59, 42, 36, 0.10), 0 8px 10px -6px rgba(59, 42, 36, 0.04)',
-        'warm-glow': '0 0 20px rgba(217, 119, 6, 0.15)',
-        'terracotta-glow': '0 0 20px rgba(185, 56, 38, 0.18)',
-        'cardamom-glow': '0 0 20px rgba(45, 106, 79, 0.15)',
+        'warm-xs': '0 1px 2px 0 rgba(15, 23, 42, 0.05)',
+        'warm-sm': '0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08)',
+        'warm-md': '0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.06)',
+        'warm-lg': '0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.04)',
+        'warm-xl': '0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04)',
+        'warm-glow': '0 0 20px rgba(2, 132, 199, 0.15)',
+        'terracotta-glow': '0 0 20px rgba(220, 38, 38, 0.20)',
+        'cardamom-glow': '0 0 20px rgba(2, 132, 199, 0.18)',
       },
       maxWidth: {
         '8xl': '88rem', // 1408px

@@ -21,14 +21,14 @@ export default function WishlistPage() {
               <Heart className="w-10 h-10" />
             </div>
             <h1 className="font-serif font-bold text-2xl sm:text-3xl text-spice-espresso mb-2">
-              Your spice shelf is waiting.
+              Your Shortlist is Empty
             </h1>
             <p className="text-sm text-spice-taupe max-w-md mx-auto mb-6">
-              Save your favourite single-origin spices, whole aromatics, and regional masalas to revisit anytime.
+              Shortlist clinical analyzers, reagent kits, and diagnostic consumables to compare specifications or request institutional quotations.
             </p>
             <Link href="/shop">
               <Button variant="primary" size="lg" showArrow className="shadow-terracotta-glow">
-                Explore Spices
+                Explore Diagnostic Catalog
               </Button>
             </Link>
           </div>
@@ -45,10 +45,10 @@ export default function WishlistPage() {
           <div className="flex items-baseline justify-between gap-4">
             <div>
               <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-                SAVED ITEMS
+                SHORTLISTED DIAGNOSTICS
               </span>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-spice-espresso tracking-tight mt-1">
-                My Saved Spice Shelf ({wishlist.length} items)
+                Saved Equipment &amp; Reagents ({wishlist.length} items)
               </h1>
             </div>
 
@@ -56,7 +56,7 @@ export default function WishlistPage() {
               onClick={clearWishlist}
               className="text-xs font-semibold text-spice-terracotta hover:underline"
             >
-              Clear Wishlist
+              Clear Shortlist
             </button>
           </div>
         </Container>

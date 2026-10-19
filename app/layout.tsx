@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans, Playfair_Display } from 'next/font/google';
+import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
 import { Navbar } from '@/components/layout/Navbar';
@@ -10,20 +10,25 @@ import { ScrollToTop } from '@/components/common/ScrollToTop';
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const displayFont = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
-  title: 'AAXOL Spices | Pure Artisanal Indian Spices & Masalas by Organium',
+  title: 'Human Biomedical LLP | Clinical Diagnostic & Laboratory Equipment Supplier India',
   description:
-    'Discover AAXOL by Organium: authentic, single-origin, hand-pounded Indian spices, artisanal masalas, and pure seasonings delivered fresh to your doorstep across India and worldwide.',
+    'Human Biomedical LLP: Authorized distributor of 3-Part & 5-Part Hematology Analyzers, Clinical Biochemistry Systems, Medical Microscopes, Centrifuges & Diagnostic Reagents across Rajasthan and All India Districts. Head Office: F-4, Tagore Nagar, 200 Feet Bypass Road, Jaipur, Rajasthan 302021.',
+  keywords: [
+    'Human Biomedical LLP',
+    'Hematology in Nagaur',
+    'Biomedical equipment Rajasthan',
+    'Diagnostic equipment supplier India',
+    'CBC analyzer Jaipur',
+    'Clinical laboratory reagents',
+    'Biochemistry analyzer India',
+    'Pathology lab setup',
+  ],
 };
 
 export default function RootLayout({
@@ -32,8 +37,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sansFont.variable} ${displayFont.variable}`}>
-      <body className="min-h-screen flex flex-col font-sans bg-spice-ivory text-spice-espresso antialiased selection:bg-spice-peach selection:text-spice-terracotta">
+    <html lang="en" className={`${sansFont.variable}`}>
+      <body className="min-h-screen flex flex-col font-sans bg-white text-slate-900 antialiased selection:bg-red-100 selection:text-red-700">
         <StoreProvider>
           <AnnouncementBar />
           <Navbar />

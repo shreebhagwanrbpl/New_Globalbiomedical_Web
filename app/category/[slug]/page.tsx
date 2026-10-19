@@ -8,7 +8,7 @@ import { Container, Button } from '@/components/common';
 import { ProductCard } from '@/components/products/ProductCard';
 import { getCategoryBySlug, staticCategories } from '@/data/categories';
 import { staticProducts } from '@/data/products';
-import { ChevronRight, Sparkles, Filter, ChevronDown, Flame, Search } from 'lucide-react';
+import { ChevronRight, Sparkles, Filter, ChevronDown, Flame, Search, ShieldCheck } from 'lucide-react';
 import { LUXURY_EASE, ScrollReveal } from '@/components/animations/Motion';
 
 type SortOption = 'featured' | 'price_asc' | 'price_desc' | 'rating' | 'discount';
@@ -21,13 +21,12 @@ export default function CategoryDetailPage() {
     id: slug,
     name: slug ? slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()) : 'Category',
     slug: slug,
-    description: 'Explore our authentic, single-origin handpicked spices and heritage blends.',
-    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1000&auto=format&fit=crop&q=80',
+    description: 'Explore high-precision clinical laboratory equipment, diagnostic analyzers, and certified reagents.',
+    image: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=1000&auto=format&fit=crop&q=80',
     subcategories: []
   };
 
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('all');
-  const [selectedSpiceLevel, setSelectedSpiceLevel] = useState<string>('all');
   const [sortBy, setSortBy] = useState<SortOption>('featured');
 
   // Filter products belonging to this category
@@ -40,9 +39,6 @@ export default function CategoryDetailPage() {
     return categoryProducts
       .filter(p => {
         if (selectedSubcategory !== 'all' && p.subcategory !== selectedSubcategory) {
-          return false;
-        }
-        if (selectedSpiceLevel !== 'all' && p.spiceLevel?.toLowerCase() !== selectedSpiceLevel.toLowerCase()) {
           return false;
         }
         return true;
@@ -62,7 +58,7 @@ export default function CategoryDetailPage() {
             return (b.bestSeller ? 1 : 0) - (a.bestSeller ? 1 : 0);
         }
       });
-  }, [categoryProducts, selectedSubcategory, selectedSpiceLevel, sortBy]);
+  }, [categoryProducts, selectedSubcategory, sortBy]);
 
   return (
     <div className="min-h-screen bg-spice-ivory pb-20">
@@ -81,7 +77,7 @@ export default function CategoryDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8">
               <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-                EXPLORE COLLECTION
+                DIAGNOSTIC EQUIPMENT &amp; REAGENTS
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-spice-espresso tracking-tight mt-1 mb-3">
                 {category.name}
@@ -91,9 +87,11 @@ export default function CategoryDetailPage() {
               </p>
 
               <div className="flex items-center gap-4 mt-5 text-xs text-spice-taupe font-semibold">
-                <span>{categoryProducts.length} Premium Products Available</span>
+                <span>{categoryProducts.length} Equipment &amp; Kits Available</span>
                 <span>•</span>
-                <span>100% Pure &amp; Stone Ground</span>
+                <span>ISO 13485 &amp; NABL Calibrated Standards</span>
+                <span>•</span>
+                <span>Same-Day Dispatch Across Rajasthan</span>
               </div>
             </div>
 
@@ -144,22 +142,10 @@ export default function CategoryDetailPage() {
         {/* Filter and Sort Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-spice-border">
           <div className="flex items-center gap-2">
-            <span className="text-xs text-spice-taupe font-semibold">Heat Level:</span>
-            <div className="flex flex-wrap gap-1.5">
-              {['all', 'Mild', 'Medium', 'Hot', 'Extra Hot'].map((lvl) => (
-                <button
-                  key={lvl}
-                  onClick={() => setSelectedSpiceLevel(lvl)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                    selectedSpiceLevel === lvl
-                      ? 'bg-spice-terracotta text-white'
-                      : 'bg-white border border-spice-border text-spice-taupe hover:text-spice-espresso'
-                  }`}
-                >
-                  {lvl === 'all' ? 'All' : lvl}
-                </button>
-              ))}
-            </div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-spice-cardamom-50 text-spice-cardamom text-xs font-bold border border-spice-cardamom-200">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Certified NABL &amp; ISO 13485 Compliant</span>
+            </span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -188,14 +174,13 @@ export default function CategoryDetailPage() {
               No products found in this category sub-filter
             </h3>
             <p className="text-xs sm:text-sm text-spice-taupe mb-4">
-              Try switching subcategories or clearing heat level filters.
+              Try switching subcategories or viewing all equipment.
             </p>
             <Button
               variant="outline"
               size="sm"
               onClick={() => {
                 setSelectedSubcategory('all');
-                setSelectedSpiceLevel('all');
               }}
             >
               Reset Filters

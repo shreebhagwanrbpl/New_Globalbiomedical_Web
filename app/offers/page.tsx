@@ -12,7 +12,7 @@ import { staticCoupons } from '@/data/coupons';
 import { buyMoreSaveMoreTiers } from '@/data/offers';
 import { formatCurrency } from '@/utils/currency';
 import { useStore } from '@/context/StoreContext';
-import { ScrollReveal, AddToCartButton, LUXURY_EASE } from '@/components/animations/Motion';
+import { ScrollReveal, AddToCartButton } from '@/components/animations/Motion';
 import {
   Tag,
   Percent,
@@ -20,11 +20,11 @@ import {
   Gift,
   Copy,
   Check,
-  Flame,
   Clock,
   ArrowRight,
   ShieldCheck,
   Layers,
+  Award,
 } from 'lucide-react';
 
 export default function OffersPage() {
@@ -39,7 +39,7 @@ export default function OffersPage() {
 
   // Top discount products
   const discountedProducts = staticProducts
-    .filter(p => p.discountPercentage && p.discountPercentage >= 20)
+    .filter(p => p.discountPercentage && p.discountPercentage >= 15)
     .sort((a, b) => (b.discountPercentage || 0) - (a.discountPercentage || 0));
 
   return (
@@ -50,13 +50,13 @@ export default function OffersPage() {
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-spice-terracotta/10 text-spice-terracotta text-xs font-bold uppercase tracking-wider mb-4">
               <Percent className="w-3.5 h-3.5" />
-              <span>PROMOTIONAL DEALS &amp; FESTIVE SAVINGS</span>
+              <span>LAB INSTITUTIONAL PROMOTIONS &amp; PACKAGES</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-spice-espresso tracking-tight leading-tight mb-3">
-              AAXOL Spice Offers &amp; Gift Bundles
+              Human Biomedical Lab Bundles &amp; Offers
             </h1>
             <p className="text-sm sm:text-base text-spice-taupe leading-relaxed">
-              Unlock exclusive deals on single-origin whole spices, cold stone-ground masalas, and luxury gift hampers. Use coupons at checkout for instant savings.
+              Unlock authorized pricing on turnkey clinical pathology lab setups, hematology-biochemistry duos, and wholesale reagent starter packs. Use institutional promo codes at checkout for instant order deductions.
             </p>
           </div>
         </Container>
@@ -69,7 +69,7 @@ export default function OffersPage() {
         <Container size="2xl">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-xs font-bold text-spice-espresso uppercase tracking-wider">
-              🎟️ Active Verified Promo Codes
+              🎟️ Active Institutional Promo Codes
             </span>
             <span className="text-xs text-spice-taupe">Click to copy code for checkout</span>
           </div>
@@ -94,7 +94,7 @@ export default function OffersPage() {
                   </p>
                   {coupon.minOrderValue && coupon.minOrderValue > 0 && (
                     <span className="text-[10px] text-spice-taupe block">
-                      Min. Order: ₹{coupon.minOrderValue}
+                      Min. Order: ₹{coupon.minOrderValue.toLocaleString('en-IN')}
                     </span>
                   )}
                 </div>
@@ -122,7 +122,7 @@ export default function OffersPage() {
       </section>
 
       {/* =========================================================================
-          2. FLASH SPICE SALE (Interactive Live Countdown)
+          2. FLASH BIOMEDICAL DISPATCH SALE
       ========================================================================= */}
       <FlashSaleSection />
 
@@ -133,13 +133,13 @@ export default function OffersPage() {
         <Container size="2xl">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-              VOLUME SAVINGS
+              ANNUAL LAB CONTRACT DISCOUNTS
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-spice-espresso tracking-tight mt-1 mb-2">
-              Buy More, Save More
+              Volume &amp; Order Tier Savings
             </h2>
             <p className="text-xs sm:text-sm text-spice-taupe">
-              Automatic stackable discounts when you stock up your pantry.
+              Automatic stackable discounts when ordering full diagnostic equipment setups or quarterly reagent bulk packs.
             </p>
           </div>
 
@@ -170,7 +170,7 @@ export default function OffersPage() {
                   </span>
                   <Link href="/shop">
                     <Button variant="outline" size="sm" className="w-full">
-                      Shop Qualifying Spices
+                      Browse Eligible Equipment
                     </Button>
                   </Link>
                 </div>
@@ -188,13 +188,13 @@ export default function OffersPage() {
           <div className="flex items-center justify-between mb-8">
             <div>
               <span className="text-xs font-bold text-spice-terracotta uppercase tracking-wider">
-                BIGGEST SAVINGS
+                FEATURED DISCOUNTS
               </span>
               <h2 className="text-2xl sm:text-3xl font-serif font-bold text-spice-espresso tracking-tight mt-1">
-                Highest Discounted Spices (20% to 30% Off)
+                Highest Discounted Lab Analyzers &amp; Reagents (15% to 30% Off)
               </h2>
               <p className="text-xs sm:text-sm text-spice-taupe mt-1">
-                Freshly milled small batches with high aroma concentration.
+                NABL calibrated instruments with direct warranty and Rajasthan field service.
               </p>
             </div>
             <Link href="/shop?offers=true" className="text-xs font-bold text-spice-terracotta hover:underline">
@@ -211,19 +211,19 @@ export default function OffersPage() {
       </section>
 
       {/* =========================================================================
-          5. CURATED COMBO OFFERS & GIFT VAULTS
+          5. CURATED TURNKEY LAB SETUP BUNDLES
       ========================================================================= */}
       <section id="combos" className="py-16 sm:py-24 bg-white border-t border-spice-border">
         <Container size="2xl">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-              PANTRY VAULTS &amp; GIFTS
+              COMPLETE TURNKEY LAB PACKAGES
             </span>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-spice-espresso tracking-tight mt-1 mb-2">
-              Combo Offers — Save up to ₹600
+              Turnkey Lab Combos — Save up to ₹50,000+
             </h2>
             <p className="text-xs sm:text-sm text-spice-taupe">
-              Packaged in luxury airtight reusable tins with complimentary measuring spoons.
+              All bundles include complete machine setup, starter reagent kits, calibration certificates, and free engineer installation across all Rajasthan districts.
             </p>
           </div>
 
@@ -243,7 +243,7 @@ export default function OffersPage() {
 
                   <div className="p-5">
                     <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider block mb-1">
-                      {combo.itemCount} Spices Included
+                      {combo.itemCount} Instruments &amp; Reagent Kits Included
                     </span>
                     <h3 className="font-serif font-bold text-lg sm:text-xl text-spice-espresso mb-1">
                       {combo.title}
@@ -253,7 +253,7 @@ export default function OffersPage() {
                     </p>
 
                     <div className="space-y-1 text-xs text-spice-taupe bg-white p-3 rounded-xl border border-spice-border">
-                      <span className="font-bold text-spice-espresso block mb-1">Includes:</span>
+                      <span className="font-bold text-spice-espresso block mb-1">Package Includes:</span>
                       {combo.itemsIncluded.slice(0, 3).map((item, i) => (
                         <div key={i} className="truncate">• {item.name} ({item.weight})</div>
                       ))}
@@ -285,7 +285,7 @@ export default function OffersPage() {
                           weight: `${combo.itemCount} Items`
                         } as any,
                         1,
-                        'Combo Box'
+                        'Lab Setup Bundle'
                       )
                     }
                     className="text-xs py-2 px-3.5"

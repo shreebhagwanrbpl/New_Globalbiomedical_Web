@@ -139,10 +139,10 @@ export default function CheckoutPage() {
 
     // Save demo order to localStorage
     if (typeof window !== 'undefined') {
-      const existingOrders = JSON.parse(localStorage.getItem('aaxol_demo_orders') || '[]');
+      const existingOrders = JSON.parse(localStorage.getItem('human_bio_demo_orders') || localStorage.getItem('aaxol_demo_orders') || '[]');
       existingOrders.unshift(newOrder);
-      localStorage.setItem('aaxol_demo_orders', JSON.stringify(existingOrders));
-      localStorage.setItem('aaxol_last_order', JSON.stringify(newOrder));
+      localStorage.setItem('human_bio_demo_orders', JSON.stringify(existingOrders));
+      localStorage.setItem('human_bio_last_order', JSON.stringify(newOrder));
     }
 
     setTimeout(() => {

@@ -3,9 +3,9 @@ import { Section } from '@/components/common';
 
 export default function OrdersPage() {
   return (
-    <Section title="Order History & Tracking" subtitle="View details of your past and in-transit spice deliveries." variant="ivory">
+    <Section title="Diagnostic Orders & Tracking" subtitle="View details of your laboratory instruments, reagents, and Rajasthan field engineer dispatches." variant="ivory">
       <div className="text-center py-12 text-spice-taupe text-sm">
-        Customer orders listing with live tracking statuses.
+        Clinical equipment consignment listing with live dispatch statuses.
       </div>
     </Section>
   );

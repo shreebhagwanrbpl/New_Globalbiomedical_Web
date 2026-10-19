@@ -34,13 +34,13 @@ export default function RegisterPage() {
               <Sparkles className="w-6 h-6" />
             </div>
             <span className="text-xs font-bold text-spice-cardamom uppercase tracking-wider">
-              NEW CUSTOMER PERKS
+              PATHOLOGY &amp; CLINICAL PORTAL
             </span>
             <h1 className="font-serif font-bold text-2xl sm:text-3xl text-spice-espresso mt-1">
-              Join AAXOL
+              Join Human Biomedical
             </h1>
             <p className="text-xs sm:text-sm text-spice-taupe mt-1">
-              Unlock 15% off your first order with code <strong className="text-spice-espresso font-mono">WELCOME15</strong>.
+              Unlock authorized institutional pricing and Rajasthan field engineer support.
             </p>
           </div>
 
